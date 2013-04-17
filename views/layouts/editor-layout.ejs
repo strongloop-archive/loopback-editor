@@ -1,3 +1,17 @@
 <% layout('layout'); %>
-<h1><%= project.name %></h1>
-<%- body %>
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="http://strongloop.com" target="_blank">Asteroid</a>
+    <ul class="nav">
+    </ul>
+  </div>
+</div>
+
+<div class="fullpage-container">
+  <div class="fullpage-sidebar" id="editor-sidebar">
+    <%- include _editor-sidebar %>
+  </div>
+  <div class="fullpage-body">
+    <%- body %>
+  </div>
+</div>
