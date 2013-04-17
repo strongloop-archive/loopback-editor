@@ -1,0 +1,35 @@
+<% layout('layouts/layout'); %>
+<% block('title', "Projects"); %>
+<% stylesheet('/projects/projects.css'); %>
+<% script('/projects/projects.js'); %>
+
+<div id="projects-modal" class="modal">
+  <ul class="nav nav-tabs projects-modal-tabs">
+    <li class="active"><a href="#open" data-toggle="tab">Open a Project</a></li>
+    <li><a href="#create" data-toggle="tab">Create a Project</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="open">
+        <div class="modal-body">
+          <ul class="project-list clearfix">
+            <li><a href="/project/weapon-rental">weapon-rental</a></li>
+            <li><a href="/project/todos">todos</a></li>
+            <li><a href="/project/diamond-shovel">diamond-shovel</a></li>
+            <li><a href="/project/ecommerce">ecommerce</a></li>
+            <li><a href="/project/support">support</a></li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <a href="#" id="open-project-btn" class="btn btn-primary" disabled>Open</a>
+        </div>
+    </div>
+    <div class="tab-pane" id="create">
+      <div class="modal-body">
+        <p><em>Not yet implemented</em></p>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-primary" disabled>Create</a>
+      </div>
+    </div>
+  </div>
+</div>
