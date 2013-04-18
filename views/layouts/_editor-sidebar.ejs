@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs">
   <li><a href="#sidebar-project-view" data-toggle="tab">Project</a></li>
-  <li class="active"><a href="#sidebar-objects-view" data-toggle="tab">Objects</a></li>
+  <li><a href="#sidebar-objects-view" data-toggle="tab">Objects</a></li>
   <li><a href="#sidebar-files-view" data-toggle="tab">Files</a></li>
 </ul>
 <div class="well">
@@ -8,11 +8,122 @@
     <div class="tab-pane" id="sidebar-project-view">
       <em>Not yet implemented</em>
     </div>
-    <div class="tab-pane active" id="sidebar-objects-view">
-      <em>Not yet implemented</em>
+    <div class="tab-pane" id="sidebar-objects-view">
+      <div class="sidebar-list" id="sidebar-objects-list">
+        <ul class="hide">
+          <li class="folder expanded">
+            <%= project.name %>
+            <ul>
+              <li class="folder">
+                Resources
+                <ul>
+                  <li>Weapons</li>
+                  <li>HelloWorld</li>
+                </ul>
+              </li>
+              <li class="folder">
+                Routes
+                <ul>
+                  <li>
+                    weapons
+                    <ul>
+                      <li>nearby</li>
+                    </ul>
+                  </li>
+                  <li>hello-world</li>
+                </ul>
+              </li>
+              <li class="folder">
+                Models
+                <ul>
+                  <li>WeaponModel</li>
+                </ul>
+              </li>
+              <li class="folder">
+                DataSources
+                <ul>
+                  <li>InventoryDB</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="tab-pane" id="sidebar-files-view">
-      <em>Not yet implemented</em>
+      <div class="sidebar-list" id="sidebar-files-list">
+        <ul class="hide">
+          <li class="folder expanded">
+            weapon-rental
+            <ul>
+              <li class="folder">
+                resources
+                <ul>
+                  <li class="folder">
+                    weapons
+                    <ul>
+                      <li>config.json</li>
+                    </ul>
+                  </li>
+                  <li class="folder">
+                    hello-world
+                    <ul>
+                      <li>config.json</li>
+                      <li>index.js</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li class="folder">
+                routes
+                <ul>
+                  <li class="folder">
+                    weapons
+                    <ul>
+                      <li class="folder">
+                        nearby
+                        <ul>
+                          <li>config.json</li>    
+                          <li>index.js</li>
+                        </ul>
+                      </li>
+                      <li>config.json</li>
+                    </ul>
+                  </li>
+                  <li class="folder">
+                    hello-world
+                    <ul>
+                      <li>config.json</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li class="folder">
+                models
+                <ul>
+                  <li class="folder">
+                    weapon-model
+                    <ul>
+                      <li>config.json</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li class="folder">
+                data-sources
+                <ul>
+                  <li class="folder">
+                    inventory-db
+                    <ul>
+                      <li>config.env.json</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

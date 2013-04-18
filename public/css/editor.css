@@ -22,3 +22,7 @@ body {
   margin-bottom: -1px; 
   border-bottom: none;
 }
+
+#editor-sidebar .dynatree-container {
+  border: none;
+}

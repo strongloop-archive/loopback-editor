@@ -1,7 +1,22 @@
 <% layout('layout'); %>
+
+<%
+  block('scripts', (blocks.scripts || "") + 
+    '<script type="text/javascript" src="/lib/js/jquery-ui.custom.min.js"></script>' +
+    '<script type="text/javascript" src="/lib/js/jquery.dynatree.min.js"></script>' + 
+    '<script type="text/javascript" src="/js/editor.js"></script>'
+  )
+%>
+
+<%
+  block('stylesheets', (blocks.stylesheets || "") + 
+    '<link rel="stylesheet" type="text/css" href="/lib/dynatree-skin/ui.dynatree.css">'
+  )
+%>
+
 <div class="navbar">
   <div class="navbar-inner">
-    <a class="brand" href="http://strongloop.com" target="_blank">Asteroid</a>
+    <a class="brand" href="/">Asteroid</a>
     <ul class="nav">
     </ul>
   </div>
@@ -15,3 +30,4 @@
     <%- body %>
   </div>
 </div>
+
