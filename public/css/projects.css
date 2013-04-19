@@ -19,6 +19,7 @@
 #projects-modal .project-list {
   margin-left: 0;
   list-style: none;
+  margin-bottom: 0;
 }
 
 #projects-modal .project-list li {

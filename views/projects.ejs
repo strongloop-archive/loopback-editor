@@ -20,11 +20,9 @@
     <div class="tab-pane active" id="open">
         <div class="modal-body">
           <ul class="project-list clearfix">
-            <li><a href="/project/weapon-rental">weapon-rental</a></li>
-            <li><a href="/project/todos">todos</a></li>
-            <li><a href="/project/diamond-shovel">diamond-shovel</a></li>
-            <li><a href="/project/ecommerce">ecommerce</a></li>
-            <li><a href="/project/support">support</a></li>
+            <% projects.forEach(function(p) { %>
+              <li><a href="/project/<%= p %>"><%= p %></a></li>  
+            <% }); %>
           </ul>
         </div>
         <div class="modal-footer">
