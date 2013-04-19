@@ -4,12 +4,10 @@
 <h2>Getting Started</h2>
 
 <ul class="guide-links">
-  <li>
-    <a href="#"><i class="icon-chevron-right"></i> Create a Resource from a DataSource</a>
-    <p>Connect your mobile app to an existing data source.</p>
-  </li>
-  <li>
-    <a href="#"><i class="icon-chevron-right"></i> Create a new Model Resource</a>
-    <p>Create a new Resource for your mobile app.</p>
-  </li>
+  <% generators.forEach(function(g) { %>
+    <li>
+      <a href="<%- g.path %>"><i class="icon-chevron-right"></i> <%= g.label %></a>
+      <p><%= g.description %></p>
+    </li>
+  <% }); %>
 </ul>

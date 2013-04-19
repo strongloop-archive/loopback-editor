@@ -1,0 +1,8 @@
+{
+  "module": "asteroid-editor-generator",
+  "options": {
+    "label": "Create a Resource from a DataSource",
+    "description": "Connect your mobile app to an existing data source."
+  },
+  "main": "data-wizard.js"
+}
