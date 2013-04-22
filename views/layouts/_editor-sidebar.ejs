@@ -9,7 +9,7 @@
       <div class="sidebar-list" id="sidebar-project-list">
         <ul class="show">
           <li class="folder expanded" data="unselectable: true">
-            <%= project.name %>
+            <%= settings.project.name %>
             <ul>
               <li>
                 HelloWorld (Resource)
@@ -44,7 +44,7 @@
       <div class="sidebar-list" id="sidebar-objects-list">
         <ul class="hide">
           <li class="folder expanded">
-            <%= project.name %>
+            <%= settings.project.name %>
             <ul>
               <li class="folder">
                 Resources
@@ -86,72 +86,23 @@
       <div class="sidebar-list" id="sidebar-files-list">
         <ul class="hide">
           <li class="folder expanded">
-            <%= project.name %>
+            <%= settings.project.name %>
             <ul>
-              <li class="folder">
-                resources
-                <ul>
-                  <li class="folder">
-                    weapons
+              <% function renderFile(file) { %>
+                <li<%- file.children ? ' class="folder"' : '' %>>
+                  <%= file.name %>
+                  <% if (file.children) { %>
                     <ul>
-                      <li>config.json</li>
+                      <% file.children.forEach(function(f) {
+                        renderFile(f);
+                      }); %>
                     </ul>
-                  </li>
-                  <li class="folder">
-                    hello-world
-                    <ul>
-                      <li>config.json</li>
-                      <li>index.js</li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li class="folder">
-                routes
-                <ul>
-                  <li class="folder">
-                    weapons
-                    <ul>
-                      <li class="folder">
-                        nearby
-                        <ul>
-                          <li>config.json</li>    
-                          <li>index.js</li>
-                        </ul>
-                      </li>
-                      <li>config.json</li>
-                    </ul>
-                  </li>
-                  <li class="folder">
-                    hello-world
-                    <ul>
-                      <li>config.json</li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li class="folder">
-                models
-                <ul>
-                  <li class="folder">
-                    weapon-model
-                    <ul>
-                      <li class="selected">config.json</li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li class="folder">
-                data-sources
-                <ul>
-                  <li class="folder">
-                    inventory-db
-                    <ul>
-                      <li>config.env.json</li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
+                  <% } %>
+                </li>
+              <% } %>
+              <% settings.project.files.forEach(function(f) {
+                renderFile(f);
+              }); %>
             </ul>
           </li>
         </ul>
