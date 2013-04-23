@@ -50,7 +50,6 @@
                   <%= type.name %>
                   <ul>
                     <% type.children.forEach(function(o) { %>
-                      <%= console.log(obj.normalDir(), o.normalDir()) %></pre>
                       <li<% _selectedClass(o) %>>
                         <% _objLink(o) %>
                       </li>
@@ -70,8 +69,12 @@
             <%= settings.project.name %>
             <ul>
               <% function renderFile(file) { %>
-                <li<%- file.children ? ' class="folder"' : '' %>>
-                  <%= file.name %>
+                <li<%- file.children ? ' class="folder"' : '' %><% file.obj && _selectedClass(file.obj) %>>
+                  <% if (file.obj) { %> 
+                    <% _objLink(file.obj, file.name) %>
+                  <% } else { %> 
+                    <%= file.name %>
+                  <% } %>
                   <% if (file.children) { %>
                     <ul>
                       <% file.children.forEach(function(f) {
