@@ -11,30 +11,21 @@
           <li class="folder expanded" data="unselectable: true">
             <%= settings.project.name %>
             <ul>
-              <li>
-                HelloWorld (Resource)
-                <ul>
-                  <li>hello-world (Route)</li>
-                </ul>
-              </li>
-              <li>
-                Weapons (Resource)
-                <ul>
-                  <li>
-                    weapons (ModelRoute)
+              <% function renderDependencyList(o) { %>
+                <li>
+                  <%= o.name %> (<%= o.module.name %>)
+                  <% if (o.dependencyList() && o.dependencyList().length) { %>
                     <ul>
-                      <li class="selected">
-                        WeaponModel (Model)
-                        <ul>
-                          <li>
-                            InventoryDB (OracleDataSource)
-                          </li>
-                        </ul>
-                      </li>
+                      <% o.dependencyList().forEach(function(d) {
+                        renderDependencyList(d);
+                      }); %>
                     </ul>
-                  </li>
-                </ul>
-              </li>
+                  <% } %>
+                </li>
+              <% } %>
+              <% settings.project.dependencyTree.forEach(function(d) {
+                renderDependencyList(d);
+              }); %>
             </ul>
           </li>
         </ul>
