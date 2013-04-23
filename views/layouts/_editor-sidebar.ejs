@@ -5,15 +5,23 @@
 </ul>
 <div class="well">
   <div class="tab-content">
+    <% function _selectedClass(o) { %>
+      <%- (typeof obj !== 'undefined' && obj.normalDir() === o.normalDir()) ? ' class="selected"' : '' %>
+    <% } %>
+    <% function _objLink(o, aText) { %>
+      <a href="/project/<%= settings.project.name %>/object/<%= o.normalDir() %>/edit">
+        <%= aText || (o.name + " (" + o.module.name + ")") %>
+      </a>
+    <% } %>
     <div class="tab-pane" id="sidebar-project-view">
       <div class="sidebar-list" id="sidebar-project-list">
         <ul class="show">
-          <li class="folder expanded" data="unselectable: true">
+          <li class="folder expanded">
             <%= settings.project.name %>
             <ul>
               <% function renderDependencyList(o) { %>
-                <li>
-                  <%= o.name %> (<%= o.module.name %>)
+                <li<% _selectedClass(o) %>>
+                  <% _objLink(o) %>
                   <% if (o.dependencyList() && o.dependencyList().length) { %>
                     <ul>
                       <% o.dependencyList().forEach(function(d) {
@@ -42,7 +50,10 @@
                   <%= type.name %>
                   <ul>
                     <% type.children.forEach(function(o) { %>
-                      <li><%= o.name %> (<%= o.module.name %>)</li>
+                      <%= console.log(obj.normalDir(), o.normalDir()) %></pre>
+                      <li<% _selectedClass(o) %>>
+                        <% _objLink(o) %>
+                      </li>
                     <% }); %>
                   </ul>
                 </li>

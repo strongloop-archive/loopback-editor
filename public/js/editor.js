@@ -17,7 +17,6 @@ $(document).ready(function() {
   // Set up treeviews
   $('#editor-sidebar .sidebar-list').dynatree({
     fx: { height: "toggle", duration: 200 },
-    autoCollapse: true,
     debugLevel: 0,
 
     onQueryExpand: function(flag, node) {
@@ -25,8 +24,15 @@ $(document).ready(function() {
       if (!flag && !node.getParent() || !node.getParent().getParent()) {
         return false;
       }
+    },
+
+    onDblClick: function(node, event) {
+      if (node.data.href) {
+        location.href = node.data.href;
+      }
     }
   }).each(function() {
+    $(this).dynatree()
     // Expand nodes so that the current object is visible
     $(this).dynatree("getSelectedNodes").forEach(function(n) {
       n.makeVisible();
