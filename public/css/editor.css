@@ -27,3 +27,7 @@ body {
   border: none;
   background: none;
 }
+
+#editor-sidebar .well {
+  background-color: #fff;
+}

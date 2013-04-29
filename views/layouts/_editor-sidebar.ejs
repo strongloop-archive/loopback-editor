@@ -13,11 +13,16 @@
         <%= aText || (o.name + " (" + o.module.name + ")") %>
       </a>
     <% } %>
+    <% function _rootLink() { %>
+      <a href="/project/<%= settings.project.name %>">
+        <%= settings.project.name %>
+      </a>
+    <% } %>
     <div class="tab-pane" id="sidebar-project-view">
       <div class="sidebar-list" id="sidebar-project-list">
         <ul class="show">
           <li class="folder expanded">
-            <%= settings.project.name %>
+            <% _rootLink() %>
             <ul>
               <% function renderDependencyList(o) { %>
                 <li<% _selectedClass(o) %>>
@@ -43,7 +48,7 @@
       <div class="sidebar-list" id="sidebar-objects-list">
         <ul class="hide">
           <li class="folder expanded">
-            <%= settings.project.name %>
+            <% _rootLink() %>
             <ul>
               <% settings.project.configByType.forEach(function(type) { %>
                 <li class="folder">
@@ -66,7 +71,7 @@
       <div class="sidebar-list" id="sidebar-files-list">
         <ul class="hide">
           <li class="folder expanded">
-            <%= settings.project.name %>
+            <% _rootLink() %>
             <ul>
               <% function renderFile(file) { %>
                 <li<%- file.children ? ' class="folder"' : '' %><% file.obj && _selectedClass(file.obj) %>>
