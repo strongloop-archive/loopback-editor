@@ -1,8 +1,6 @@
 var wizard = require('.');
 
 wizard.app.get('/', function(req, res) {
-  console.log('rendering');
-  console.log('wizard project', wizard.app.get('project'));
   res.render('data-wizard.ejs');
 });
 

@@ -27,7 +27,7 @@
     <%- include _editor-sidebar %>
   </div>
   <div class="fullpage-body">
-    <%- body %>
+    <%- typeof body === 'undefined' ? _body : body %>
   </div>
 </div>
 

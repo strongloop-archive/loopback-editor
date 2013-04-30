@@ -9,13 +9,13 @@
       <%- (typeof obj !== 'undefined' && obj.normalDir() === o.normalDir()) ? ' class="selected"' : '' %>
     <% } %>
     <% function _objLink(o, aText) { %>
-      <a href="/project/<%= settings.project.name %>/object/<%= o.normalDir() %>/edit">
+      <a href="/project/<%= viewLocals.project.name %>/object/<%= o.normalDir() %>/edit">
         <%= aText || (o.name + " (" + o.module.name + ")") %>
       </a>
     <% } %>
     <% function _rootLink() { %>
-      <a href="/project/<%= settings.project.name %>">
-        <%= settings.project.name %>
+      <a href="/project/<%= viewLocals.project.name %>">
+        <%= viewLocals.project.name %>
       </a>
     <% } %>
     <div class="tab-pane" id="sidebar-project-view">
@@ -36,7 +36,7 @@
                   <% } %>
                 </li>
               <% } %>
-              <% settings.project.dependencyTree.forEach(function(d) {
+              <% viewLocals.project.dependencyTree.forEach(function(d) {
                 renderDependencyList(d);
               }); %>
             </ul>
@@ -50,7 +50,7 @@
           <li class="folder expanded">
             <% _rootLink() %>
             <ul>
-              <% settings.project.configByType.forEach(function(type) { %>
+              <% viewLocals.project.configByType.forEach(function(type) { %>
                 <li class="folder">
                   <%= type.name %>
                   <ul>
@@ -89,7 +89,7 @@
                   <% } %>
                 </li>
               <% } %>
-              <% settings.project.files.forEach(function(f) {
+              <% viewLocals.project.files.forEach(function(f) {
                 renderFile(f);
               }); %>
             </ul>
