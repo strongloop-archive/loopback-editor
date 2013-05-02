@@ -19,6 +19,43 @@
       </select>
     </div>
 
+    <div class="wizard-card" data-cardname="data-source-create-oracle" data-cardgroup="data-source-select">
+      <h3>Create an Oracle DataSource</h3>
+      <div class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label">Name</label>
+          <div class="controls">
+            <input type="text" name="name" value="oracle-db" data-validate="wizardView.validateRequired">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Host</label>
+          <div class="controls">
+            <input type="text" name="host" data-validate="wizardView.validateRequired">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Port</label>
+          <div class="controls">
+            <input type="text" name="port" class="input-small" data-validate="wizardView.validateRequired">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Username</label>
+          <div class="controls">
+            <input type="text" name="username">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Password</label>
+          <div class="controls">
+            <input type="password" name="password">
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn">Test Connection</button>
+    </div>
+
     <div class="wizard-card" data-cardname="schema-select">
       <h3 class="block-header" data-validate="wizardView.validateSchema">Select a Schema</h3>
       <!-- This isn't really a nav list, but it looks good as one -->

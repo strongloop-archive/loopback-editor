@@ -18,6 +18,15 @@ var wizardView = {
     wizard.cards[card].reload();
   },
 
+  datasourceHeaders: function() {
+    if (wizardModel.newDataSource) {
+      // TODO: encrypt this so we're not sending connection information in plaintext
+      return {
+        'X-New-Data-Source': JSON.stringify(wizardModel.newDataSource)
+      }
+    }
+  },
+
   initDataSourceSelect: function() {
     var card = wizard.cards['data-source-select'];
     card.on('reload', function() {
@@ -40,7 +49,35 @@ var wizardView = {
     });
 
     card.el.find('.data-source-dropdown').change(function() {
+
+      var dataSource = $(this).val();
+
+      if (dataSource === "!!create-oracle") {
+        wizard.cards['data-source-create-oracle'].enable();
+      } else {
+        wizard.cards['data-source-create-oracle'].disable();
+      }
+
       wizardView.invalidateCard('schema-select');
+    });
+  },
+
+  initDataSourceCreateOracle: function() {
+    var card = wizard.cards['data-source-create-oracle'];
+    card.on('validate', function() {
+      var $el = card.el;
+      var config = {
+        name: $el.find('input[name=name]').val(),
+        module: 'oracle-data-source',
+        config: {
+          host: $el.find('input[name=host]').val(),
+          port: $el.find('input[name=port]').val(),
+          username: $el.find('input[name=username]').val(),
+          password: $el.find('input[name=password]').val()
+        }
+      };
+      wizardModel.newDataSource = config;
+      wizardModel.dataSource = config.name;
     });
   },
 
@@ -49,19 +86,21 @@ var wizardView = {
     var $schemaBox = card.el.find('.schema-box');
 
     card.on('reload', function() {
-      $.ajax(ROOTURL + '/schemas/' + wizardModel.dataSource)
-        .success(function(data) {
+      $.ajax(ROOTURL + '/schemas/' + wizardModel.dataSource, {
+        headers: wizardView.datasourceHeaders(),
+        success: function(data) {
           wizardModel.schemas = data;
           wizardModel.schema = undefined;
           wizardView.renderSchemas();
-        })
-        .error(function() {
+        },
+        error: function() {
           if (confirm("Something went wrong while loading schemas. Try again?")) {
             wizard.cards['schema-select'].reload();
           } else {
             location.href = "/project/" + PROJECT;
           }
-        });
+        }
+      })
     });
     
 
@@ -83,19 +122,21 @@ var wizardView = {
     var card = wizard.cards['mapping-define'];
     card.on('reload', function() {
 
-      $.ajax(ROOTURL + '/mapping-info/' + wizardModel.dataSource + '/' + wizardModel.schema)
-        .success(function(data) {
+      $.ajax(ROOTURL + '/mapping-info/' + wizardModel.dataSource + '/' + wizardModel.schema, {
+        headers: wizardView.datasourceHeaders(),
+        success: function(data) {
           wizardModel.mappingInfo = data;
 
           wizardView.renderMappingInfo();
-        })
-        .error(function() {
+        },
+        error: function() {
           if (confirm("Something went wrong while loading mapping information. Try again?")) {
             wizard.cards['mapping-info'].reload();
           } else {
             location.href = "/project/" + PROJECT;
           }
-        });
+        }
+      })
     }).on('validate', function() {
       var modelName = card.el.find('input[name=modelName]').val();
       wizardModel.modelName = modelName;
@@ -121,6 +162,9 @@ var wizardView = {
     wizardModel.dataSources.forEach(function(d) {
       $dropdown.append('<option value="' + d.dir + '">' + d.name + ' (' + d.module.name + ')</option>');
     });
+    $dropdown.append('<optgroup label="Create new....">' +
+      '<option value="!!create-oracle">Oracle DataSource</option>' +
+      '</optgroup>')
   },
 
   renderSchemas: function() {
@@ -171,6 +215,14 @@ var wizardView = {
     } else {
       return {status: false, msg: "You must select a schema."};
     }
+  },
+
+  validateRequired: function(el) { 
+    if (el.val()) {
+      return {status: true};
+    } else {
+      return {status: false, msg: "Required"};
+    }
   }
 };
 
@@ -185,6 +237,7 @@ $(document).ready(function () {
 
   
   wizardView.initDataSourceSelect();
+  wizardView.initDataSourceCreateOracle();
   wizardView.initSchemaSelect();
   wizardView.initMappingDefine();
 

@@ -2,6 +2,14 @@ h3.block-header {
   display: inline-block;
 }
 
+.wizard-cards .form-horizontal .control-label {
+  width: 100px;
+}
+
+.wizard-cards .form-horizontal .controls {
+  margin-left: 120px;
+}
+
 .wizard-cards .well {
   background: #fff;
 }
