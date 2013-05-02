@@ -1,17 +1,13 @@
 <% layout('layout'); %>
 
-<%
-  block('scripts', (blocks.scripts || "") + 
-    '<script type="text/javascript" src="/lib/js/jquery-ui.custom.min.js"></script>' +
-    '<script type="text/javascript" src="/lib/js/jquery.dynatree.min.js"></script>' + 
-    '<script type="text/javascript" src="/js/editor.js"></script>'
-  )
+<% 
+  script("/lib/js/jquery-ui.custom.min.js");
+  script("/lib/js/jquery.dynatree.min.js");
+  script("/js/editor.js");
 %>
 
 <%
-  block('stylesheets', (blocks.stylesheets || "") + 
-    '<link rel="stylesheet" type="text/css" href="/lib/dynatree-skin/ui.dynatree.css">'
-  )
+  stylesheet("/lib/dynatree-skin/ui.dynatree.css") 
 %>
 
 <div class="navbar">
