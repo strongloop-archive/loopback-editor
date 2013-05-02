@@ -10,13 +10,24 @@ wizard.app.get('/', function(req, res) {
 
 wizard.app.post('/', function(req, res) {
 
-  res.json({
-    actions: [{
+  var actions = [{
+    verb: "Created",
+    obj: req.body.modelName,
+    module: "model",
+    dir: req.body.modelName
+  }];
+
+  if (req.body.newDataSource) {
+    actions.unshift({
       verb: "Created",
-      obj: req.body.modelName,
-      module: "model",
-      dir: req.body.modelName
-    }]
+      obj: req.body.newDataSource.name,
+      module: req.body.newDataSource.module,
+      dir: req.body.newDataSource.name
+    });
+  }
+
+  res.json({
+    actions: actions
   })
 });
 
