@@ -13,9 +13,9 @@ wizard.app.post('/', function(req, res) {
   res.json({
     actions: [{
       verb: "Created",
-      obj: req.body.schema,
+      obj: req.body.modelName,
       module: "model",
-      dir: req.body.schema
+      dir: req.body.modelName
     }]
   })
 });
@@ -41,5 +41,24 @@ wizard.app.get('/schemas/:dataSource', function(req, res) {
     views: [{
       name: 'INVENTORY'
     }]
+  });
+});
+
+wizard.app.get('/mapping-info/:dataSource/:schema', function(req, res) {
+
+  res.json({
+
+    defaultModelName: "weapons",
+    columns: [{
+      originalName: "WEAPON_ID",
+      defaultName: "id"
+    }, {
+      originalName: "WEAPON_NAME",
+      defaultName: "name"
+    }, {
+      originalName: "WEAPON_COST",
+      defaultName: "cost"
+    }]
+
   });
 });

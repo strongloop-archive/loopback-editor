@@ -4,6 +4,8 @@ var wizardModel = {
   serialize: function() {
     var copy = $.extend({}, wizardModel);
     delete copy.dataSources;
+    delete copy.schemas;
+    delete copy.mappingInfo;
     delete copy.serialize;
 
     return copy;
@@ -46,25 +48,67 @@ var wizardView = {
     var card = wizard.cards['schema-select'];
     var $schemaBox = card.el.find('.schema-box');
 
-    $.ajax(ROOTURL + '/schemas/' + wizardModel.dataSource)
-      .success(function(data) {
-        wizardModel.schemas = data;
-        wizardView.renderSchemas();
-      })
-      .error(function() {
-        if (confirm("Something went wrong while loading schemas. Try again?")) {
-          wizard.cards['schema-select'].reload();
-        } else {
-          location.href = "/project/" + PROJECT;
-        }
-      });
+    card.on('reload', function() {
+      $.ajax(ROOTURL + '/schemas/' + wizardModel.dataSource)
+        .success(function(data) {
+          wizardModel.schemas = data;
+          wizardModel.schema = undefined;
+          wizardView.renderSchemas();
+        })
+        .error(function() {
+          if (confirm("Something went wrong while loading schemas. Try again?")) {
+            wizard.cards['schema-select'].reload();
+          } else {
+            location.href = "/project/" + PROJECT;
+          }
+        });
+    });
+    
 
     $schemaBox.on('click', 'a', function() {
       var $this = $(this);
       $schemaBox.find('li').removeClass('active');
       $this.parent().addClass('active');
       wizardModel.schema = $this.data('value');
+      wizardView.invalidateCard('mapping-define');
       return false;
+    });
+
+    card.on('unmarkVisited', function() {
+      wizardView.invalidateCard('mapping-define');
+    });
+  },
+
+  initMappingDefine: function() {
+    var card = wizard.cards['mapping-define'];
+    card.on('reload', function() {
+
+      $.ajax(ROOTURL + '/mapping-info/' + wizardModel.dataSource + '/' + wizardModel.schema)
+        .success(function(data) {
+          wizardModel.mappingInfo = data;
+
+          wizardView.renderMappingInfo();
+        })
+        .error(function() {
+          if (confirm("Something went wrong while loading mapping information. Try again?")) {
+            wizard.cards['mapping-info'].reload();
+          } else {
+            location.href = "/project/" + PROJECT;
+          }
+        });
+    }).on('validate', function() {
+      var modelName = card.el.find('input[name=modelName]').val();
+      wizardModel.modelName = modelName;
+
+      var mapping = {};
+
+      card.el.find('.mapping-table tbody tr').each(function() {
+        var $row = $(this);
+        var $input = $row.find('input');
+
+        mapping[$input.attr('name')] = $input.val();
+      });
+      wizardModel.mapping = mapping;
     });
   },
 
@@ -90,6 +134,26 @@ var wizardView = {
         $schemaBox.append('<li><a href="#" data-value="' + s.name + '">' + s.name + '</a></li>');
       });
     });
+  },
+
+  renderMappingInfo: function() {
+    var $card = wizard.cards['mapping-define'].el,
+        mappingInfo = wizardModel.mappingInfo;
+
+    $card.find('input[name=modelName]').val(mappingInfo.defaultModelName);
+
+    var $tbody = $card.find('.mapping-table tbody').empty();
+
+    mappingInfo.columns.forEach(function(c) {
+      $tbody.append(
+        '<tr>' +
+          '<td class="original-name">' + c.originalName + '</td>' +
+          '<td class="arrow-cell"><i class="icon-arrow-right"></i></td>' +
+          '<td><input type="text" class="input-medium" name="' + c.originalName + '" value="' + c.defaultName + '" /></td>' +
+        '</tr>'
+        );
+    });
+
   },
 
   validateDataSource: function(el) {
@@ -122,6 +186,7 @@ $(document).ready(function () {
   
   wizardView.initDataSourceSelect();
   wizardView.initSchemaSelect();
+  wizardView.initMappingDefine();
 
   wizard.on('submit', function() {
     $.ajax(ROOTURL, {
@@ -150,5 +215,10 @@ $(document).ready(function () {
   });
 
   wizard.show();
+
+  // testing
+  wizardModel.dataSource = 'db';
+  wizardModel.schema = 'WEAPONS';
+  wizard.setCard('mapping-define');
 
 });
