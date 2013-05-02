@@ -8,6 +8,23 @@ wizard.app.get('/', function(req, res) {
   res.render('data-wizard.ejs');
 });
 
-wizard.app.get('/data', function(req, res) {
-  res.end("Test route");
+wizard.app.post('/', function(req, res) {
+
+  res.json({
+    actions: [{
+      verb: "Created",
+      obj: "todos",
+      module: "model",
+      dir: "todos"
+    }]
+  })
+});
+
+
+wizard.app.get('/data-sources', function(req, res) {
+  req.project.getObjectsOfType('data-source', function(err, dataSources) {
+    if (err) res.end(err);
+
+    res.json(dataSources);
+  });
 });

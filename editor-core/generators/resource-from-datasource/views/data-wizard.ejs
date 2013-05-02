@@ -2,20 +2,28 @@
 <% script( viewLocals.rootUrl + '/lib/bootstrap-wizard/bootstrap-wizard.min.js'); %>
 <% script( viewLocals.rootUrl + '/js/data-wizard.js'); %>
 
-Hello, wizard!
+<script type="text/javascript">
+  var ROOTURL = "<%- viewLocals.rootUrl %>";
+  var PROJECT = "<%- viewLocals.project.name %>";
+</script>
 
 <div class="wizard" id="data-wizard">
  
     <h1>Create a Resource from a DataSource</h1>
  
-    <div class="wizard-card" data-cardname="card1">
-        <h3>Card 1</h3>
-        Some content
+    <div class="wizard-card" data-cardname="data-source-select">
+        <h3>Select a DataSource</h3>
+        <select class="data-source-dropdown" data-validate="wizardView.validateDataSource">
+          <option>Loading data sources...</option>
+        </select>
     </div>
- 
-    <div class="wizard-card" data-cardname="card2">
-        <h3>Card 2</h3>
-        Some other content
+
+    <div class="wizard-success">
+      <ul class="actions">
+
+      </ul>
+      <a href="<%- viewLocals.rootUrl %>" class="btn">Create another Resource</a>
+      <a href="/project/<%- viewLocals.project.name %>" class="btn btn-primary">Finished</a>
     </div>
  
 </div>
