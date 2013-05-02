@@ -1,4 +1,5 @@
 <% stylesheet( viewLocals.rootUrl + '/lib/bootstrap-wizard/bootstrap-wizard.css'); %>
+<% stylesheet( viewLocals.rootUrl + '/style.css'); %>
 <% script( viewLocals.rootUrl + '/lib/bootstrap-wizard/bootstrap-wizard.min.js'); %>
 <% script( viewLocals.rootUrl + '/js/data-wizard.js'); %>
 
@@ -12,10 +13,19 @@
     <h1>Create a Resource from a DataSource</h1>
  
     <div class="wizard-card" data-cardname="data-source-select">
-        <h3>Select a DataSource</h3>
-        <select class="data-source-dropdown" data-validate="wizardView.validateDataSource">
-          <option>Loading data sources...</option>
-        </select>
+      <h3>Select a DataSource</h3>
+      <select class="data-source-dropdown" data-validate="wizardView.validateDataSource">
+        <option>Loading data sources...</option>
+      </select>
+    </div>
+
+    <div class="wizard-card" data-cardname="schema-select">
+      <h3 class="block-header" data-validate="wizardView.validateSchema">Select a Schema</h3>
+      <!-- This isn't really a nav list, but it looks good as one -->
+      <div class="well">
+        <ul class="nav nav-list schema-box">
+        </ul>
+      </div>
     </div>
 
     <div class="wizard-success">

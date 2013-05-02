@@ -13,9 +13,9 @@ wizard.app.post('/', function(req, res) {
   res.json({
     actions: [{
       verb: "Created",
-      obj: "todos",
+      obj: req.body.schema,
       module: "model",
-      dir: "todos"
+      dir: req.body.schema
     }]
   })
 });
@@ -26,5 +26,20 @@ wizard.app.get('/data-sources', function(req, res) {
     if (err) res.end(err);
 
     res.json(dataSources);
+  });
+});
+
+wizard.app.get('/schemas/:dataSource', function(req, res) {
+  res.json({
+    tables: [{
+      name: 'WEAPONS'
+    }, {
+      name: 'USERS'
+    }, {
+      name: 'LOCATIONS'
+    }],
+    views: [{
+      name: 'INVENTORY'
+    }]
   });
 });

@@ -11,6 +11,63 @@ var wizardModel = {
 };
 
 var wizardView = {
+  invalidateCard: function(card) {
+    wizard.cards[card].unmarkVisited();
+    wizard.cards[card].reload();
+  },
+
+  initDataSourceSelect: function() {
+    var card = wizard.cards['data-source-select'];
+    card.on('reload', function() {
+
+      $.ajax(ROOTURL + '/data-sources')
+        .success(function(data) {
+          wizardModel.dataSources = data;
+          wizardView.renderDataSources();
+        })
+        .error(function() {
+          if (confirm("Something went wrong while loading data sources. Try again?")) {
+            wizard.cards['data-source-select'].reload();
+          } else {
+            location.href = "/project/" + PROJECT;
+          }
+        });
+    }).on('validate', function() {
+      var card = this;
+      wizardModel.existingDataSource = card.el.find('.data-source-dropdown').val();
+    });
+
+    card.el.find('.data-source-dropdown').change(function() {
+      wizardView.invalidateCard('schema-select');
+    });
+  },
+
+  initSchemaSelect: function() {
+    var card = wizard.cards['schema-select'];
+    var $schemaBox = card.el.find('.schema-box');
+
+    $.ajax(ROOTURL + '/schemas/' + wizardModel.dataSource)
+      .success(function(data) {
+        wizardModel.schemas = data;
+        wizardView.renderSchemas();
+      })
+      .error(function() {
+        if (confirm("Something went wrong while loading schemas. Try again?")) {
+          wizard.cards['schema-select'].reload();
+        } else {
+          location.href = "/project/" + PROJECT;
+        }
+      });
+
+    $schemaBox.on('click', 'a', function() {
+      var $this = $(this);
+      $schemaBox.find('li').removeClass('active');
+      $this.parent().addClass('active');
+      wizardModel.schema = $this.data('value');
+      return false;
+    });
+  },
+
   renderDataSources: function() {
     var card = wizard.cards['data-source-select'];
 
@@ -22,12 +79,33 @@ var wizardView = {
     });
   },
 
+  renderSchemas: function() {
+    var card = wizard.cards['schema-select'];
+    var $schemaBox = card.el.find('.schema-box');
+
+    $schemaBox.empty();
+    Object.keys(wizardModel.schemas).forEach(function(schemaType) {
+      $schemaBox.append('<li class="nav-header">' + schemaType + '</li>');
+      wizardModel.schemas[schemaType].forEach(function(s) {
+        $schemaBox.append('<li><a href="#" data-value="' + s.name + '">' + s.name + '</a></li>');
+      });
+    });
+  },
+
   validateDataSource: function(el) {
     var val = el.val();
     if (val && val !== "Select one...") {
       return {status: true};
     } else {
-      return {status: false, msg: "Must select a data source."}
+      return {status: false, msg: "You must select a data source."};
+    }
+  },
+
+  validateSchema: function() {
+    if (wizardModel.schema) {
+      return {status: true};
+    } else {
+      return {status: false, msg: "You must select a schema."};
     }
   }
 };
@@ -41,30 +119,15 @@ $(document).ready(function () {
 
   wizard.serialize = wizardModel.serialize;
 
-  wizard.cards['data-source-select'].on('reload', function() {
-    var card = this;
-
-    $.ajax(ROOTURL + '/data-sources')
-      .success(function(data) {
-        wizardModel.dataSources = data;
-        wizardView.renderDataSources();
-      })
-      .error(function() {
-        if (confirm("Something went wrong while loading data sources. Try again?")) {
-          wizard.cards['data-source-select'].reload();
-        } else {
-          location.href = "/project/" + PROJECT;
-        }
-      });
-  }).on('validate', function() {
-    var card = this;
-    wizardModel.existingDataSource = card.el.find('.data-source-dropdown').val();
-  });
+  
+  wizardView.initDataSourceSelect();
+  wizardView.initSchemaSelect();
 
   wizard.on('submit', function() {
     $.ajax(ROOTURL, {
       type: "POST",
-      body: wizardModel.serialize(),
+      contentType: 'application/json',
+      data: JSON.stringify(wizardModel.serialize()),
       success: function(resp) {
         wizard.submitSuccess(resp);
         wizard.hideButtons();
