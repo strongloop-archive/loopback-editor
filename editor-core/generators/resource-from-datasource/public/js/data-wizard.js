@@ -216,9 +216,4 @@ $(document).ready(function () {
 
   wizard.show();
 
-  // testing
-  wizardModel.dataSource = 'db';
-  wizardModel.schema = 'WEAPONS';
-  wizard.setCard('mapping-define');
-
 });
