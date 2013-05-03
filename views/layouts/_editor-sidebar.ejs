@@ -18,8 +18,8 @@
         <%= viewLocals.project.name %>
       </a>
     <% } %>
-    <% function _iconFor(o){ %>
-      data-icon="<%- viewLocals.iconForObject(o) %>"
+    <% function _iconFor(o) { %>
+      data="icon: <%- viewLocals.iconForObject(o) %>"
     <% } %>
     <div class="tab-pane" id="sidebar-project-view">
       <div class="sidebar-list" id="sidebar-project-list">
@@ -58,7 +58,7 @@
                   <%= type.name %>
                   <ul>
                     <% type.children.forEach(function(o) { %>
-                      <li<% _selectedClass(o) %>>
+                      <li<% _selectedClass(o) %> <% _iconFor(o) %>>
                         <% _objLink(o) %>
                       </li>
                     <% }); %>
@@ -77,9 +77,9 @@
             <% _rootLink() %>
             <ul>
               <% function renderFile(file) { %>
-                <li<%- file.children ? ' class="folder"' : '' %><% file.obj && _selectedClass(file.obj) %>>
+                <li<%- file.children ? ' class="folder"' : '' %><% file.obj && _selectedClass(file.obj) %> <% file.obj && _iconFor(file.obj) %>>
                   <% if (file.obj) { %> 
-                    <% _objLink(file.obj, file.name) %>
+                    <% _objLink(file.obj, file.name + " (" + file.obj.module.name + ")") %> 
                   <% } else { %> 
                     <%= file.name %>
                   <% } %>
