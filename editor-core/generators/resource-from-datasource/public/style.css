@@ -2,6 +2,11 @@ h3.block-header {
   display: inline-block;
 }
 
+.wizard-modal.modal {
+  position: absolute;
+  top: 300px;
+}
+
 .wizard-cards .form-horizontal .control-label {
   width: 100px;
 }

@@ -16,6 +16,7 @@ body {
   float: left;
   width: -webkit-calc(100% - 270px);
   width: calc(100% - 270px);
+  position: relative;
 }
 
 #editor-sidebar .nav-tabs {
