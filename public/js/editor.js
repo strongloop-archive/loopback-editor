@@ -18,6 +18,7 @@ $(document).ready(function() {
   $('#editor-sidebar .sidebar-list').dynatree({
     fx: { height: "toggle", duration: 200 },
     debugLevel: 0,
+    imagePath: '/_icon/',
 
     onQueryExpand: function(flag, node) {
       // prevent collapsing of root node

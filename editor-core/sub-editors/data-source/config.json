@@ -1,0 +1,7 @@
+{
+  "module": "asteroid-sub-editor",
+  "options": {
+    "for": "data-source",
+    "icon": "data-source.png"
+  }
+}

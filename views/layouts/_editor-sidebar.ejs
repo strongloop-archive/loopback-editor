@@ -18,6 +18,9 @@
         <%= settings.project.name %>
       </a>
     <% } %>
+    <% function _iconFor(o){ %>
+      data-icon="<%- viewLocals.iconForObject(o) %>"
+    <% } %>
     <div class="tab-pane" id="sidebar-project-view">
       <div class="sidebar-list" id="sidebar-project-list">
         <ul class="show">
@@ -25,7 +28,7 @@
             <% _rootLink() %>
             <ul>
               <% function renderDependencyList(o) { %>
-                <li<% _selectedClass(o) %>>
+                <li<% _selectedClass(o) %> <% _iconFor(o) %>>
                   <% _objLink(o) %>
                   <% if (o.dependencyList() && o.dependencyList().length) { %>
                     <ul>
