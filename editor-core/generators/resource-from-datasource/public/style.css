@@ -1,0 +1,50 @@
+h3.block-header {
+  display: inline-block;
+}
+
+.wizard-modal.modal {
+  position: absolute;
+  top: 300px;
+}
+
+.wizard-cards .form-horizontal .control-label {
+  width: 100px;
+}
+
+.wizard-cards .form-horizontal .controls {
+  margin-left: 120px;
+}
+
+.wizard-cards .well {
+  background: #fff;
+}
+
+.mapping-table-container {
+  margin-top: 20px;
+}
+
+.mapping-table {
+  margin: 0;
+}
+
+.mapping-table tbody tr:first-child td {
+  border-top: none;
+}
+
+.mapping-table td {
+  vertical-align: middle;
+}
+
+.mapping-table .original-name {
+  font-family: monospace;
+  text-align: right;
+}
+
+.mapping-table .arrow-cell {
+  width: 50px;
+  text-align: center;
+}
+
+.mapping-table td input {
+  margin: 0;
+}

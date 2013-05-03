@@ -1,0 +1,92 @@
+<% stylesheet( viewLocals.rootUrl + '/lib/bootstrap-wizard/bootstrap-wizard.css'); %>
+<% stylesheet( viewLocals.rootUrl + '/style.css'); %>
+<% script( viewLocals.rootUrl + '/lib/bootstrap-wizard/bootstrap-wizard.min.js'); %>
+<% script( viewLocals.rootUrl + '/js/data-wizard.js'); %>
+
+<script type="text/javascript">
+  var ROOTURL = "<%- viewLocals.rootUrl %>";
+  var PROJECT = "<%- viewLocals.project.name %>";
+</script>
+
+<div class="wizard" id="data-wizard">
+ 
+    <h1>Create a Resource from a DataSource</h1>
+ 
+    <div class="wizard-card" data-cardname="data-source-select">
+      <h3>Select a DataSource</h3>
+      <select class="data-source-dropdown" data-validate="wizardView.validateDataSource">
+        <option>Loading data sources...</option>
+      </select>
+    </div>
+
+    <div class="wizard-card" data-cardname="data-source-create-oracle" data-cardgroup="data-source-select">
+      <h3>Create an Oracle DataSource</h3>
+      <div class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label">Name</label>
+          <div class="controls">
+            <input type="text" name="name" value="oracle-db" data-validate="wizardView.validateRequired">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Host</label>
+          <div class="controls">
+            <input type="text" name="host" data-validate="wizardView.validateRequired">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Port</label>
+          <div class="controls">
+            <input type="text" name="port" class="input-small" data-validate="wizardView.validateRequired">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Username</label>
+          <div class="controls">
+            <input type="text" name="username">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Password</label>
+          <div class="controls">
+            <input type="password" name="password">
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn">Test Connection</button>
+    </div>
+
+    <div class="wizard-card" data-cardname="schema-select">
+      <h3 class="block-header" data-validate="wizardView.validateSchema">Select a Schema</h3>
+      <!-- This isn't really a nav list, but it looks good as one -->
+      <div class="well">
+        <ul class="nav nav-list schema-box">
+        </ul>
+      </div>
+    </div>
+
+    <div class="wizard-card" data-cardname="mapping-define">
+      
+
+      <h3>Define Mapping</h3>
+      <div class="form-inline">
+        <label for="modelName" class="help-inline">Model name&nbsp;</label>
+        <input type="text" name="modelName" />
+      </div>
+      <div class="mapping-table-container well">
+        <table class="table mapping-table">
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="wizard-success">
+      <ul class="actions">
+
+      </ul>
+      <a href="<%- viewLocals.rootUrl %>" class="btn">Create another Resource</a>
+      <a href="/project/<%- viewLocals.project.name %>" class="btn btn-primary">Finished</a>
+    </div>
+ 
+</div>
