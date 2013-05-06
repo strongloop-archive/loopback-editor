@@ -4,3 +4,5 @@ node_modules/mocha
 node_modules/ejs-locals
 node_modules/underscore
 node_modules/debug
+node_modules/asteroid
+node_modules/asteroid-project-manager
