@@ -15,7 +15,8 @@
     "ejs-locals": "~1.0.2",
     "underscore": "~1.4.4",
     "asteroid": "git+ssh://git@github.com:strongloop/asteroid.git",
-    "asteroid-project-manager": "git+ssh://git@github.com:strongloop/asteroid-project-manager.git"
+    "asteroid-project-manager": "git+ssh://git@github.com:strongloop/asteroid-project-manager.git",
+    "asteroid-module-loader": "git+ssh://git@github.com:strongloop/asteroid-module-loader.git"
   },
   "devDependencies": {
     "mocha": "~1.9.0"

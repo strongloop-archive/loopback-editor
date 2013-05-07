@@ -6,3 +6,4 @@ node_modules/underscore
 node_modules/debug
 node_modules/asteroid
 node_modules/asteroid-project-manager
+node_modules/asteroid-module-loader

@@ -5,10 +5,10 @@ v0.0.0
 
     slnode install asteroid-editor
 
-## Dependencies
-  
-The editor currently depends on these modules being in your `NODE_PATH`:
+## Usage
 
-- `asteroid`
-- `asteroid-module-loader`
-- `asteroid-project-manager`
+Create a folder called `asteroid-projects` in your HOME directory (`/home/[username]/` for *nix, `C:\Users\[username]\` for Windows).
+
+Inside the `asteroid-projects` folder, create a folder with an `asteroid.json` file. The file can be empty for now.
+
+The folder can be empty, or it can be an asteroid sample project such as [todos](https://github.com/strongloop/asteroid/tree/master/example/todos).
