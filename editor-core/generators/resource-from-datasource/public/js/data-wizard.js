@@ -145,11 +145,25 @@ var wizardView = {
 
       card.el.find('.mapping-table tbody tr').each(function() {
         var $row = $(this);
-        var $input = $row.find('input');
+        var $input = $row.find('input[type=text]');
+        var $checkbox = $row.find('input[type=checkbox]');
 
-        mapping[$input.attr('name')] = $input.val();
+        if ($checkbox.is(':checked')) {
+          mapping[$input.attr('name')] = $input.val();
+        }
       });
       wizardModel.mapping = mapping;
+    });
+
+    card.el.find('.mapping-table').on('change', '.include-cell input', function() {
+      var checked = $(this).is(':checked');
+      var $row = $(this).parent().parent();
+      var prop = $row.data("original-name");
+      if (checked) {
+        $row.removeClass('disabled');
+      } else {
+        $row.addClass('disabled');
+      }
     });
   },
 
@@ -191,6 +205,7 @@ var wizardView = {
     mappingInfo.columns.forEach(function(c) {
       $tbody.append(
         '<tr>' +
+          '<td class="include-cell"><input type="checkbox" name="include" checked="checked" /></td>' +
           '<td class="original-name">' + c.originalName + '</td>' +
           '<td class="arrow-cell"><i class="icon-arrow-right"></i></td>' +
           '<td><input type="text" class="input-medium" name="' + c.originalName + '" value="' + c.defaultName + '" /></td>' +

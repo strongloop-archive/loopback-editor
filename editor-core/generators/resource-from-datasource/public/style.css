@@ -31,8 +31,16 @@ h3.block-header {
   border-top: none;
 }
 
+.mapping-table tr.disabled td:not(.include-cell) {
+  opacity: 0.3;
+}
+
 .mapping-table td {
   vertical-align: middle;
+}
+
+.mapping-table .include-cell input {
+  display: block;
 }
 
 .mapping-table .original-name {
