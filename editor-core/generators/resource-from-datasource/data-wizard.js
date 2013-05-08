@@ -1,6 +1,7 @@
 var wizard = require('.'),
 		asteroid = require('asteroid'),
-		path = require('path');
+		path = require('path'),
+    TaskEmitter = require('task-emitter');
 
 wizard.app.use(asteroid.static(path.join(__dirname, './public')));
 
@@ -10,25 +11,56 @@ wizard.app.get('/', function(req, res) {
 
 wizard.app.post('/', function(req, res) {
 
-  var actions = [{
-    verb: "Created",
-    obj: req.body.modelName,
-    module: "model",
-    dir: req.body.modelName
-  }];
+  var te = new TaskEmitter();
+  var actions = [];
 
   if (req.body.newDataSource) {
-    actions.unshift({
-      verb: "Created",
-      obj: req.body.newDataSource.name,
-      module: req.body.newDataSource.module,
-      dir: req.body.newDataSource.name
+    te.task('createDataSource', function(next) {
+      actions.unshift({
+        verb: "Created",
+        obj: req.body.newDataSource.name,
+        module: req.body.newDataSource.module,
+        dir: req.body.newDataSource.name
+      });
+      req.project.createObject(req.body.newDataSource.name, req.body.newDataSource, function(err) {
+        next(err);
+      });
     });
   }
 
-  res.json({
-    actions: actions
+  te.task('createModel', function(next) {
+    actions.push({
+      verb: "Created",
+      obj: req.body.modelName,
+      module: "model",
+      dir: req.body.modelName
+    });
+
+    var configJson = {
+      module: 'model',
+      options: {
+        mapping: req.body.mapping
+      },
+      dependencies: {
+        'data-source': req.body.dataSource
+      }
+    };
+    console.log(req.body, configJson);
+    req.project.createObject(req.body.modelName, configJson, function(err) {
+      next(err);
+    });
   })
+
+  te.on('done', function(next) {
+      res.json({
+        actions: actions
+      })
+    })
+    .on('error', function(err) {
+      res.end(err);
+    });
+
+  
 });
 
 

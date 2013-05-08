@@ -45,7 +45,7 @@ var wizardView = {
         });
     }).on('validate', function() {
       var card = this;
-      wizardModel.existingDataSource = card.el.find('.data-source-dropdown').val();
+      wizardModel.dataSource = card.el.find('.data-source-dropdown').val();
     });
 
     card.el.find('.data-source-dropdown').change(function() {
@@ -68,8 +68,8 @@ var wizardView = {
       var $el = card.el;
       var config = {
         name: $el.find('input[name=name]').val(),
-        module: 'oracle-data-source',
-        config: {
+        module: 'data-source', //TODO: Use oracle-data-source once implemented
+        options: {
           host: $el.find('input[name=host]').val(),
           port: $el.find('input[name=port]').val(),
           username: $el.find('input[name=username]').val(),
