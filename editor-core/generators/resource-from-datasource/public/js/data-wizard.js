@@ -15,7 +15,7 @@ var wizardModel = {
 var wizardView = {
   invalidateCard: function(card) {
     wizard.cards[card].unmarkVisited();
-    wizard.cards[card].reload();
+    wizard.cards[card].lazyReload();
   },
 
   datasourceHeaders: function() {
@@ -245,7 +245,7 @@ var wizardView = {
 $(document).ready(function () {
   
   wizard = $('#data-wizard').wizard({
-    closeable: false
+    modal: false
   });
 
   wizard.serialize = wizardModel.serialize;
@@ -255,6 +255,10 @@ $(document).ready(function () {
   wizardView.initDataSourceCreateOracle();
   wizardView.initSchemaSelect();
   wizardView.initMappingDefine();
+
+  wizard.on('close', function() {
+    location.href = "/project/" + PROJECT;
+  });
 
   wizard.on('submit', function() {
     $.ajax(ROOTURL, {
