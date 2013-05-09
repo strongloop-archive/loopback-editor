@@ -45,7 +45,6 @@ wizard.app.post('/', function(req, res) {
         'data-source': req.body.dataSource
       }
     };
-    console.log(req.body, configJson);
     req.project.createObject(req.body.modelName, configJson, function(err) {
       next(err);
     });
