@@ -1,0 +1,29 @@
+<% layout('editor-layout'); %>
+
+<% 
+  script("/lib/js/jquery-ui.custom.min.js");
+  script("/lib/js/jquery.dynatree.min.js");
+  script("/js/editor.js");
+%>
+
+<%
+  stylesheet("/lib/dynatree-skin/ui.dynatree.css") 
+%>
+
+<div class="sub-editor-header">
+<h2><strong><%= obj.name %></strong> (<%= obj.module.name %>)</h2>
+<% if (viewLocals.objMeta.dependencies.length) { %>
+  <div class="dependencies meta-list">
+    <label>Dependencies:</label>
+    <ul>
+      <% viewLocals.objMeta.dependencies.forEach(function(d) { %>
+        <li><a href="<%- viewLocals.urlForObject(d.obj) %>"><%= d.obj.name %></a></li>
+      <% }); %>
+    </ul>
+  </div>
+<% } %>
+</div>
+
+
+<%- typeof body === 'undefined' ? _body : body %>
+

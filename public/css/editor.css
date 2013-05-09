@@ -32,3 +32,27 @@ body {
 #editor-sidebar .well {
   background-color: #fff;
 }
+
+.sub-editor-header h2 {
+  font-weight: normal;
+}
+
+.sub-editor-header .meta-list {
+  margin-bottom: 8px;
+}
+
+.sub-editor-header .meta-list label {
+  display: inline-block;
+  margin-right: 8px;
+  cursor: normal;
+}
+
+.sub-editor-header .meta-list ul {
+  display: inline-block;
+  margin: 0;
+}
+
+.sub-editor-header .meta-list ul li {
+  display: inline-block;
+  margin-right: 8px;
+}
