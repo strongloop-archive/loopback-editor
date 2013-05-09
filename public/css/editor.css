@@ -56,3 +56,8 @@ body {
   display: inline-block;
   margin-right: 8px;
 }
+
+.sub-editor-header {
+  border-bottom: #ccc 1px solid;
+  margin-bottom: 8px;
+}

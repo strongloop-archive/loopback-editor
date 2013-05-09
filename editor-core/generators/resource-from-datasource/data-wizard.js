@@ -39,7 +39,7 @@ wizard.app.post('/', function(req, res) {
     var configJson = {
       module: 'model',
       options: {
-        mapping: req.body.mapping
+        maps: req.body.mapping
       },
       dependencies: {
         'data-source': req.body.dataSource
