@@ -11,7 +11,7 @@
 %>
 
 <div class="sub-editor-header">
-  <h2><strong><%= obj.name %></strong> (<%= obj.module.name %>)</h2>
+  <h2><strong><%= viewLocals.obj.name %></strong> (<%= viewLocals.obj.module.name %>)</h2>
   <% if (viewLocals.objMeta.dependencies.length) { %>
     <div class="dependencies meta-list">
       <label>Dependencies:</label>
