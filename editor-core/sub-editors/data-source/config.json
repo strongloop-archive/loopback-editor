@@ -2,8 +2,6 @@
   "module": "asteroid-sub-editor",
   "options": {
     "for": "data-source",
-    "icon": "data-source.png",
-    "app": true
-  },
-  "main": "data-source-sub-editor.js"
+    "icon": "data-source.png"
+  }
 }

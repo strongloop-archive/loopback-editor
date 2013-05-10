@@ -1,0 +1,26 @@
+<% stylesheet( viewLocals.rootUrl + '/style.css'); %>
+<h3>Properties</h3>
+<div class="properties">
+  <% function iconFor(type) {
+    var icon = 'icon-asterisk';
+    if (type === 'string') {
+      icon = 'icon-font';
+    } else if (type === 'number') {
+      icon = 'icon-plus-sign';
+    } else if (type === 'boolean') {
+      icon = 'icon-ok-sign';
+    }
+  %>
+    <i class="<%= icon %>"></i>
+  <% } %>
+  <% properties.forEach(function(p) { %>
+    <div class="property">
+      <div class="property-header">
+        <% iconFor(p.type) %>
+        <span class="property-name"><%= p.name %></span>
+        <span class="label"><%= p.type %></span>
+      </div>
+    </div>
+  <% }); %>
+  
+</div>

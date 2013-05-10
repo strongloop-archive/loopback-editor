@@ -3,8 +3,6 @@ var wizard = require('.'),
 		path = require('path'),
     TaskEmitter = require('task-emitter');
 
-wizard.app.use(asteroid.static(path.join(__dirname, './public')));
-
 wizard.app.get('/', function(req, res) {
   res.render('data-wizard.ejs');
 });
