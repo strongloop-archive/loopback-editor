@@ -267,7 +267,8 @@ var wizardView = {
 $(document).ready(function () {
   
   wizard = $('#data-wizard').wizard({
-    modal: false
+    modal: false,
+    dismissValidationOnFocus: true
   });
 
   wizard.serialize = wizardModel.serialize;
