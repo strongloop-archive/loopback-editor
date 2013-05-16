@@ -10,7 +10,7 @@
 
 <div class="wizard" id="data-wizard">
  
-    <h1>Create a Resource from a DataSource</h1>
+    <h1>Create a Model from a DataSource</h1>
  
     <div class="wizard-card" data-cardname="data-source-select">
       <h3>Select a DataSource</h3>
@@ -31,13 +31,13 @@
         <div class="control-group">
           <label class="control-label">Host</label>
           <div class="controls">
-            <input type="text" name="host" data-validate="wizardView.validateRequired">
+            <input type="text" name="host" data-validate="wizardView.validateHost">
           </div>
         </div>
         <div class="control-group">
           <label class="control-label">Port</label>
           <div class="controls">
-            <input type="text" name="port" class="input-small" data-validate="wizardView.validateRequired">
+            <input type="text" name="port" class="input-small" data-validate="wizardView.validatePort">
           </div>
         </div>
         <div class="control-group">
@@ -85,7 +85,7 @@
       <ul class="actions">
 
       </ul>
-      <a href="<%- viewLocals.rootUrl %>" class="btn">Create another Resource</a>
+      <a href="<%- viewLocals.rootUrl %>" class="btn">Create another Model</a>
       <a href="/project/<%- viewLocals.project.name %>" class="btn btn-primary">Finished</a>
     </div>
  

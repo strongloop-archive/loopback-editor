@@ -238,6 +238,28 @@ var wizardView = {
     } else {
       return {status: false, msg: "Required"};
     }
+  },
+
+  validateHost: function(el) {
+    var hostRegex = /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/;
+    if (!el.val()) {
+      return {status: false, msg: "Required"};
+    } else if (!el.val().match(hostRegex)) {
+      return {status: false, msg: "Must be a valid hostname or IP address"};
+    } else {
+      return {status: true};
+    }
+  },
+
+  validatePort: function(el) {
+    var portRegex = /^[0-9]+$/;
+    if (!el.val()) {
+      return {status: false, msg: "Required"};
+    } else if (!el.val().match(portRegex)) {
+      return {status: false, msg: "Must be a valid port number"};
+    } else {
+      return {status: true};
+    }
   }
 };
 
@@ -287,5 +309,7 @@ $(document).ready(function () {
   });
 
   wizard.show();
+
+  wizard.setCard('data-source-create-oracle');
 
 });

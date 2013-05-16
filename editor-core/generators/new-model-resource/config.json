@@ -1,7 +1,0 @@
-{
-  "module": "asteroid-editor-generator",
-  "options": {
-    "label": "Create a new Model Resource",
-    "description": "Create a new Resource for your mobile app."
-  }
-}
