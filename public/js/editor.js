@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  
+
   // Try to keep the view consistent
   var preferredView = (window.localStorage && window.localStorage.getItem("editorSidebarView"))
                         || "#sidebar-objects-view";
@@ -33,11 +33,42 @@ $(document).ready(function() {
       }
     }
   }).each(function() {
-    $(this).dynatree()
+
+    var listId = $(this).attr("id");
+
     // Expand nodes so that the current object is visible
     $(this).dynatree("getSelectedNodes").forEach(function(n) {
       n.makeVisible();
     });
+
+    if (window.localStorage) {
+
+      var storageKey = 'expandedNodes:' + listId,
+          tree = $(this).dynatree("getTree");
+
+      try {
+        var expandedNodes = window.localStorage.getItem(storageKey);
+        expandedNodes = JSON.parse(expandedNodes);
+        expandedNodes.forEach(function(nK) {
+          var node = tree.getNodeByKey(nK);
+          if (node) {
+            node.expand();
+          }
+        });
+      } catch(ex) {}
+
+      $(window).on('beforeunload', function() {
+        var expandedNodes = [];
+        tree.visit(function(n) {
+          if (n.isExpanded()) {
+            expandedNodes.push(n.data.key);
+          }
+        });
+        window.localStorage.setItem(storageKey, JSON.stringify(expandedNodes));
+      });
+    }
+
+    
   })
 
 });

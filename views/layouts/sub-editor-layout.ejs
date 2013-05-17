@@ -1,15 +1,5 @@
 <% layout('editor-layout'); %>
 
-<% 
-  script("/lib/js/jquery-ui.custom.min.js");
-  script("/lib/js/jquery.dynatree.min.js");
-  script("/js/editor.js");
-%>
-
-<%
-  stylesheet("/lib/dynatree-skin/ui.dynatree.css") 
-%>
-
 <div class="sub-editor-header">
   <h2><strong><%= viewLocals.obj.name %></strong> (<%= viewLocals.obj.module.name %>)</h2>
   <% if (viewLocals.objMeta.dependencies.length) { %>

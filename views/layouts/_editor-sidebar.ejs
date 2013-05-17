@@ -19,12 +19,13 @@
       </a>
     <% } %>
     <% function _iconFor(o) { %>
-      data="icon: <%- viewLocals.iconForObject(o) %>"
+      data="icon: <%- viewLocals.iconForObject(o) %>, key: '<%= o.normalDir() %>'"
     <% } %>
     <div class="tab-pane" id="sidebar-project-view">
+      <input type="hidden" value="<%= viewLocals.project.names %>" />
       <div class="sidebar-list" id="sidebar-project-list">
         <ul class="show">
-          <li class="folder expanded">
+          <li class="folder expanded" data="key: '_project-list'">
             <% _rootLink() %>
             <ul>
               <% function renderDependencyList(o) { %>
@@ -50,11 +51,11 @@
     <div class="tab-pane" id="sidebar-objects-view">
       <div class="sidebar-list" id="sidebar-objects-list">
         <ul class="hide">
-          <li class="folder expanded">
+          <li class="folder expanded" data="key: '_object-list'">
             <% _rootLink() %>
             <ul>
               <% viewLocals.project.configByType.forEach(function(type) { %>
-                <li class="folder">
+                <li class="folder" data="key: '_type_<%= type.name %>'">
                   <%= type.name %>
                   <ul>
                     <% type.children.forEach(function(o) { %>
@@ -73,11 +74,11 @@
     <div class="tab-pane" id="sidebar-files-view">
       <div class="sidebar-list" id="sidebar-files-list">
         <ul class="hide">
-          <li class="folder expanded">
+          <li class="folder expanded"  data="key: '_files-list'">
             <% _rootLink() %>
             <ul>
               <% function renderFile(file) { %>
-                <li<%- file.children ? ' class="folder"' : '' %><% file.obj && _selectedClass(file.obj) %> <% file.obj && _iconFor(file.obj) %>>
+                <li<%- file.children ? ' class="folder"' : '' %><% file.obj && _selectedClass(file.obj) %> <% file.obj && _iconFor(file.obj) %><%- !file.obj ? 'data="key: \'_file_' + file.normalDir + '\'"' : '' %>>
                   <% if (file.obj) { %> 
                     <% _objLink(file.obj, file.name + " (" + file.obj.module.name + ")") %> 
                   <% } else { %> 
