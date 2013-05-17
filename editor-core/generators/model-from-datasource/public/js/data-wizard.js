@@ -208,7 +208,7 @@ var wizardView = {
           '<td class="include-cell"><input type="checkbox" name="include" checked="checked" /></td>' +
           '<td class="original-name">' + c.originalName + '</td>' +
           '<td class="arrow-cell"><i class="icon-arrow-right"></i></td>' +
-          '<td><input type="text" class="input-medium" name="' + c.originalName + '" value="' + c.defaultName + '" /></td>' +
+          '<td><input type="text" class="input-medium" name="' + c.originalName + '" value="' + c.defaultName + '" data-validate="wizardView.validateJsonName" /></td>' +
         '</tr>'
         );
     });
@@ -240,26 +240,29 @@ var wizardView = {
     }
   },
 
-  validateHost: function(el) {
-    var hostRegex = /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/;
+  validateRequiredRegex: function(el, regex, msg) {
     if (!el.val()) {
       return {status: false, msg: "Required"};
-    } else if (!el.val().match(hostRegex)) {
-      return {status: false, msg: "Must be a valid hostname or IP address"};
+    } else if (!el.val().match(regex)) {
+      return {status: false, msg: msg};
     } else {
       return {status: true};
     }
   },
 
+  validateHost: function(el) {
+    var regex = /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/;
+    return wizardView.validateRequiredRegex(el, regex, "Must be a valid hostname or IP address");
+  },
+
   validatePort: function(el) {
     var portRegex = /^[0-9]+$/;
-    if (!el.val()) {
-      return {status: false, msg: "Required"};
-    } else if (!el.val().match(portRegex)) {
-      return {status: false, msg: "Must be a valid port number"};
-    } else {
-      return {status: true};
-    }
+    return wizardView.validateRequiredRegex(el, portRegex, "Must be a valid port number");
+  },
+
+  validateJsonName: function(el) {
+    var jsonRegex = /^[a-z_][a-z_0-9]*$/i;
+    return wizardView.validateRequiredRegex(el, jsonRegex, "Must be a valid JSON name");
   }
 };
 
@@ -310,7 +313,5 @@ $(document).ready(function () {
   });
 
   wizard.show();
-
-  wizard.setCard('data-source-create-oracle');
 
 });
