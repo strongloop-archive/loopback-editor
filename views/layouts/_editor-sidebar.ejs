@@ -4,6 +4,27 @@
   <li><a href="#sidebar-files-view" data-toggle="tab">Files</a></li>
 </ul>
 <div class="well">
+  <div class="btn-group">
+    <a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#">
+      <i class="icon-plus icon-white"></i>
+      Create
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <% viewLocals.generators.forEach(function(g) { %>
+        <li>
+          <li>
+            <a href="<%- g.path %>"> <%= g.label %></a>
+          </li>
+        </li>
+      <% }); %>
+      <li class="divider"></li>
+      <li>
+        <a href="">Create model</a>
+        <a href="">Create data-source</a>
+      </li>
+    </ul>
+  </div>
   <div class="tab-content">
     <% function _selectedClass(o) { %>
       <%- (typeof obj !== 'undefined' && obj.normalDir() === o.normalDir()) ? ' class="selected"' : '' %>

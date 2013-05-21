@@ -8,3 +8,5 @@ node_modules/asteroid
 node_modules/asteroid-project-manager
 node_modules/asteroid-module-loader
 node_modules/task-emitter
+node_modules/sl-task-emitter
+node_modules/sl-module-loader

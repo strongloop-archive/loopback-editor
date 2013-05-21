@@ -17,7 +17,7 @@
     "asteroid": "git+ssh://git@github.com:strongloop/asteroid.git",
     "asteroid-project-manager": "git+ssh://git@github.com:strongloop/asteroid-project-manager.git",
     "asteroid-module-loader": "git+ssh://git@github.com:strongloop/asteroid-module-loader.git",
-    "task-emitter": "git+ssh://git@github.com:strongloop/task-emitter.git"
+    "task-emitter": "git+ssh://git@github.com:strongloop/sl-task-emitter.git"
   },
   "devDependencies": {
     "mocha": "~1.9.0"
