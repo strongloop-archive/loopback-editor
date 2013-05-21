@@ -19,10 +19,11 @@
         </li>
       <% }); %>
       <li class="divider"></li>
+      <% viewLocals.subEditors.forEach(function(e) { %>
       <li>
-        <a href="">Create model</a>
-        <a href="">Create data-source</a>
+        <a href="#" class="create-link" data-module-type="<%= e.name %>">Create <%= e.name %></a>
       </li>
+      <% }); %>
     </ul>
   </div>
   <div class="tab-content">

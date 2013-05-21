@@ -66,3 +66,12 @@ body {
   border-bottom: #ccc 1px solid;
   margin-bottom: 8px;
 }
+
+.create-config-object-modal .modal-body .form-inline {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.create-config-object-modal .modal-body label {
+  margin-right: 20px;
+}
