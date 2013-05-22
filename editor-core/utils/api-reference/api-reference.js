@@ -4,7 +4,7 @@ var utility = require('.'),
 var apis = {
   rest: "REST API",
   ios: "iOS SDK",
-  andriod: "Android SDK"
+  android: "Android SDK"
 };
 
 _(apis).each(function(v, k) {
