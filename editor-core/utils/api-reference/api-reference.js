@@ -1,13 +1,23 @@
-var utility = require('.');
+var utility = require('.'),
+    _ = require('underscore');
 
-utility.app.get('/rest', function(req, res) {
-  res.render('index.ejs', {api: "REST API"});
+var apis = {
+  rest: "REST API",
+  ios: "iOS SDK",
+  andriod: "Android SDK"
+};
+
+_(apis).each(function(v, k) {
+  utility.app.get('/' + k, function(req, res) {
+    res.render('index.ejs', {api: v});
+  });
 });
 
-utility.app.get('/ios', function(req, res) {
-  res.render('index.ejs', {api: "iOS SDK"});
-});
-
-utility.app.get('/android', function(req, res) {
-  res.render('index.ejs', {api: "Android SDK"});
-});
+utility.views = function() {
+  return _(apis).map(function(v, k) {
+    return {
+      title: v,
+      path: '/' + k
+    };
+  });
+};

@@ -19,17 +19,15 @@
     <a class="brand" href="/project/<%- viewLocals.project.name %>"><%- viewLocals.project.name %></a>
     <ul class="nav">
       <% viewLocals.editorUtils.forEach(function(u) { %>
-        <li class="<%- viewLocals.currentUtility === u.name ? 'active' : '' %> <%-u.options.views ? 'dropdown' : '' %>">
-          <% if (u.options.views) { %>
+        <li class="<%- viewLocals.currentUtility === u.name ? 'active' : '' %> <%-u.views ? 'dropdown' : '' %>">
+          <% if (u.views) { %>
             <a href="#" data-toggle="dropdown">
               <%= u.options.title %>
               <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <% u.options.views.forEach(function(v) { %>
+              <% (typeof u.views === 'function' ? u.views() : u.views).forEach(function(v) { %>
                 <li class="<%- viewLocals.relativeUrl === v.path ? 'active' : '' %>">
-                  <!-- <%= viewLocals.relativeUrl %> -->
-                  <!-- <%= v.path %> -->
                   <a href="/project/<%- viewLocals.project.name %>/utility/<%- u.name %><%- v.path %>"><%= v.title %></a>
                 </li>
               <% }); %>
