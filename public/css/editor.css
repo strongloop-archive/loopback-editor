@@ -2,6 +2,22 @@ body {
   min-width: 960px;
 }
 
+#global-asteroid-navbar {
+  margin-bottom: 0px;
+}
+
+#global-asteroid-navbar .navbar-inner {
+  border-radius: 0;
+}
+
+#global-asteroid-subnav {
+  margin-top: -1px;
+}
+
+#global-asteroid-subnav .navbar-inner {
+  border-radius: 0; 
+}
+
 .fullpage-container {
   margin: 20px;
 }

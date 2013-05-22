@@ -14,10 +14,15 @@
   var PROJECT = "<%- viewLocals.project.name %>";
 </script>
 
-<div class="navbar">
+<div class="navbar" id="global-asteroid-subnav">
   <div class="navbar-inner">
-    <a class="brand" href="/">Asteroid</a>
+    <a class="brand" href="/project/<%- viewLocals.project.name %>"><%- viewLocals.project.name %></a>
     <ul class="nav">
+      <% for (var i=0;i<5;i++) { %>
+        <li>
+          <a href="#">Option <%= i + 1 %></a>
+        </li>
+      <% } %>
     </ul>
   </div>
 </div>
