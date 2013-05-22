@@ -1,0 +1,7 @@
+{
+  "module": "asteroid-editor-utility",
+  "options": {
+    "title": "API"
+  },
+  "main": "api-reference.js"
+}

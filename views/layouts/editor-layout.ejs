@@ -18,11 +18,11 @@
   <div class="navbar-inner">
     <a class="brand" href="/project/<%- viewLocals.project.name %>"><%- viewLocals.project.name %></a>
     <ul class="nav">
-      <% for (var i=0;i<5;i++) { %>
-        <li>
-          <a href="#">Option <%= i + 1 %></a>
+      <% viewLocals.editorUtils.forEach(function(u) { %>
+        <li <%- viewLocals.currentUtility === u.name ? 'class="active"' : '' %>>
+          <a href="/project/<%- viewLocals.project.name %>/utility/<%- u.name %>"><%= u.options.title %></a>
         </li>
-      <% } %>
+      <% }); %>
     </ul>
   </div>
 </div>
