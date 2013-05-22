@@ -1,7 +1,17 @@
 {
   "module": "asteroid-editor-utility",
   "options": {
-    "title": "API"
+    "title": "API",
+    "views": [{
+      "title": "REST API",
+      "path": "/rest"
+    }, {
+      "title": "iOS SDK",
+      "path": "/ios"
+    }, {
+      "title": "Android SDK",
+      "path": "/android"
+    }]
   },
   "main": "api-reference.js"
 }
