@@ -13,115 +13,35 @@
     <ul class="dropdown-menu">
       <% viewLocals.generators.forEach(function(g) { %>
         <li>
-          <li>
-            <a href="<%- g.path %>"> <%= g.label %></a>
-          </li>
+          <a href="<%- g.path %>"> <%= g.label %></a>
         </li>
       <% }); %>
       <li class="divider"></li>
       <% viewLocals.subEditors.forEach(function(e) { %>
-      <li>
-        <a href="#" class="create-link" data-module-type="<%= e.name %>">Create <%= e.name %></a>
-      </li>
+        <li>
+          <a href="#" class="create-link" data-module-type="<%= e.name %>">Create <%= e.name %></a>
+        </li>
       <% }); %>
     </ul>
   </div>
   <div class="tab-content">
-    <% function _selectedClass(o) { %>
-      <%- (typeof obj !== 'undefined' && obj.normalDir() === o.normalDir()) ? ' class="selected"' : '' %>
-    <% } %>
-    <% function _objLink(o, aText) { %>
-      <a href="/project/<%= viewLocals.project.name %>/object/<%= o.normalDir() %>/edit">
-        <%= aText || (o.name + " (" + o.module.name + ")") %>
-      </a>
-    <% } %>
-    <% function _rootLink() { %>
-      <a href="/project/<%= viewLocals.project.name %>">
-        <%= viewLocals.project.name %>
-      </a>
-    <% } %>
-    <% function _iconFor(o) { %>
-      data="icon: <%- viewLocals.iconForObject(o) %>, key: '<%= o.normalDir() %>'"
-    <% } %>
     <div class="tab-pane" id="sidebar-project-view">
       <input type="hidden" value="<%= viewLocals.project.names %>" />
       <div class="sidebar-list" id="sidebar-project-list">
-        <ul class="show">
-          <li class="folder expanded" data="key: '_project-list'">
-            <% _rootLink() %>
-            <ul>
-              <% function renderDependencyList(o) { %>
-                <li<% _selectedClass(o) %> <% _iconFor(o) %>>
-                  <% _objLink(o) %>
-                  <% if (o.dependencyList() && o.dependencyList().length) { %>
-                    <ul>
-                      <% o.dependencyList().forEach(function(d) {
-                        renderDependencyList(d);
-                      }); %>
-                    </ul>
-                  <% } %>
-                </li>
-              <% } %>
-              <% viewLocals.project.dependencyTree.forEach(function(d) {
-                renderDependencyList(d);
-              }); %>
-            </ul>
-          </li>
-        </ul>
       </div>
     </div>
     <div class="tab-pane" id="sidebar-objects-view">
       <div class="sidebar-list" id="sidebar-objects-list">
-        <ul class="hide">
-          <li class="folder expanded" data="key: '_object-list'">
-            <% _rootLink() %>
-            <ul>
-              <% viewLocals.project.configByType.forEach(function(type) { %>
-                <li class="folder" data="key: '_type_<%= type.name %>'">
-                  <%= type.name %>
-                  <ul>
-                    <% type.children.forEach(function(o) { %>
-                      <li<% _selectedClass(o) %> <% _iconFor(o) %>>
-                        <% _objLink(o) %>
-                      </li>
-                    <% }); %>
-                  </ul>
-                </li>
-              <% }); %>
-            </ul>
-          </li>
-        </ul>
       </div>
     </div>
     <div class="tab-pane" id="sidebar-files-view">
       <div class="sidebar-list" id="sidebar-files-list">
-        <ul class="hide">
-          <li class="folder expanded"  data="key: '_files-list'">
-            <% _rootLink() %>
-            <ul>
-              <% function renderFile(file) { %>
-                <li<%- file.children ? ' class="folder"' : '' %><% file.obj && _selectedClass(file.obj) %> <% file.obj && _iconFor(file.obj) %><%- !file.obj ? 'data="key: \'_file_' + file.normalDir + '\'"' : '' %>>
-                  <% if (file.obj) { %> 
-                    <% _objLink(file.obj, file.name + " (" + file.obj.module.name + ")") %> 
-                  <% } else { %> 
-                    <%= file.name %>
-                  <% } %>
-                  <% if (file.children) { %>
-                    <ul>
-                      <% file.children.forEach(function(f) {
-                        renderFile(f);
-                      }); %>
-                    </ul>
-                  <% } %>
-                </li>
-              <% } %>
-              <% viewLocals.project.files.forEach(function(f) {
-                renderFile(f);
-              }); %>
-            </ul>
-          </li>
-        </ul>
       </div>
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  EDITOR_SIDEBAR_NAVIGATION = <%- JSON.stringify(viewLocals.project.navigationMenus) %>;
+  CURRENT_OBJECT_DIR = <%- typeof obj !== 'undefined' ? "'" + obj.normalDir() + "'" : 'undefined' %>;
+</script>

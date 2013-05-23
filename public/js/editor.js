@@ -15,36 +15,52 @@ $(document).ready(function() {
   }
 
   // Set up treeviews
-  $('#editor-sidebar .sidebar-list').dynatree({
-    fx: { height: "toggle", duration: 200 },
-    debugLevel: 0,
-    imagePath: '/_icon/',
+  $('#editor-sidebar .sidebar-list').each(function() {
 
-    onQueryExpand: function(flag, node) {
-      // prevent collapsing of root node
-      if (!flag && !node.getParent() || !node.getParent().getParent()) {
-        return false;
+    var dynatreeOptions = {
+      fx: { height: "toggle", duration: 200 },
+      debugLevel: 0,
+      imagePath: '/_icon/',
+
+      onQueryExpand: function(flag, node) {
+        // prevent collapsing of root node
+        if (!flag && !node.getParent() || !node.getParent().getParent()) {
+          return false;
+        }
+      },
+
+      onDblClick: function(node, event) {
+        if (node.data.href) {
+          location.href = node.data.href;
+        }
       }
-    },
-
-    onDblClick: function(node, event) {
-      if (node.data.href) {
-        location.href = node.data.href;
-      }
-    }
-  }).each(function() {
-
+    };
     var listId = $(this).attr("id");
 
-    // Expand nodes so that the current object is visible
-    $(this).dynatree("getSelectedNodes").forEach(function(n) {
-      n.makeVisible();
-    });
+    if (listId === 'sidebar-files-list') {
+      dynatreeOptions.children = EDITOR_SIDEBAR_NAVIGATION.files;
+    } else if (listId === 'sidebar-project-list') {
+      dynatreeOptions.children = EDITOR_SIDEBAR_NAVIGATION.dependencyTree;
+    } else if (listId === 'sidebar-objects-list') {
+      dynatreeOptions.children = EDITOR_SIDEBAR_NAVIGATION.configByType;
+    }
+      
+
+    $(this).dynatree(dynatreeOptions);
+
+    var tree = $(this).dynatree("getTree");
+
+    if (CURRENT_OBJECT_DIR) {
+      tree.visit(function(n) {
+        if (n.data.key === CURRENT_OBJECT_DIR) {
+          n.select();
+          n.makeVisible(); // Expand nodes so that the current object is visible
+        }
+      });
+    }
 
     if (window.localStorage) {
-
-      var storageKey = 'expandedNodes:' + listId,
-          tree = $(this).dynatree("getTree");
+      var storageKey = 'expandedNodes:' + listId;
 
       try {
         var expandedNodes = window.localStorage.getItem(storageKey);
