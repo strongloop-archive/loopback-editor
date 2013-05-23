@@ -50,6 +50,44 @@ $(document).ready(function() {
 
     var tree = $(this).dynatree("getTree");
 
+    highlightSelectedNodes(tree);
+
+    if (window.localStorage) {
+      var storageKey = 'expandedNodes:' + listId;
+
+      try {
+        var expandedNodes = window.localStorage.getItem(storageKey);
+        expandedNodes = JSON.parse(expandedNodes);
+        restoreExpandedNodes(tree, expandedNodes);
+      } catch(ex) {}
+
+      $(window).on('beforeunload', function() {
+        var expandedNodes = getExpandedNodes(tree);
+        window.localStorage.setItem(storageKey, JSON.stringify(expandedNodes));
+      });
+    }
+  });
+
+  function getExpandedNodes(tree) {
+    var expandedNodes = [];
+    tree.visit(function(n) {
+      if (n.isExpanded()) {
+        expandedNodes.push(n.data.key);
+      }
+    }); 
+    return expandedNodes;
+  }
+
+  function restoreExpandedNodes(tree, expandedNodes) {
+    expandedNodes.forEach(function(nK) {
+      var node = tree.getNodeByKey(nK);
+      if (node) {
+        node.expand();
+      }
+    });
+  }
+
+  function highlightSelectedNodes(tree) {
     if (CURRENT_OBJECT_DIR) {
       tree.visit(function(n) {
         if (n.data.key === CURRENT_OBJECT_DIR) {
@@ -58,32 +96,32 @@ $(document).ready(function() {
         }
       });
     }
+  }
 
-    if (window.localStorage) {
-      var storageKey = 'expandedNodes:' + listId;
+  function refreshProjectNavigationMenus() {
 
-      try {
-        var expandedNodes = window.localStorage.getItem(storageKey);
-        expandedNodes = JSON.parse(expandedNodes);
-        expandedNodes.forEach(function(nK) {
-          var node = tree.getNodeByKey(nK);
-          if (node) {
-            node.expand();
-          }
-        });
-      } catch(ex) {}
-
-      $(window).on('beforeunload', function() {
-        var expandedNodes = [];
-        tree.visit(function(n) {
-          if (n.isExpanded()) {
-            expandedNodes.push(n.data.key);
-          }
-        });
-        window.localStorage.setItem(storageKey, JSON.stringify(expandedNodes));
-      });
+    function refreshNavTree(id, children) {
+      var tree = $('#' + id).dynatree('getTree');
+      var expandedNodes = getExpandedNodes(tree);
+      var oldFx = tree.options.fx;
+      tree.options.fx = null;
+      tree.options.children = children;
+      tree.reload();
+      restoreExpandedNodes(tree, expandedNodes);
+      highlightSelectedNodes(tree);
+      tree.options.fx = oldFx;
     }
-  });
+
+    $.ajax("/project/" + PROJECT + "/navigation", {
+      success: function(menus) {
+        refreshNavTree('sidebar-files-list', menus.files);
+        refreshNavTree('sidebar-project-list', menus.dependencyTree);
+        refreshNavTree('sidebar-objects-list', menus.configByType);
+      },
+    });
+    
+  }
+  window.refreshProjectNavigationMenus = refreshProjectNavigationMenus;
 
   $('#editor-sidebar').on('click', '.create-link', function(e) {
     var type = $(this).data('module-type');
