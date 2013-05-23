@@ -295,6 +295,7 @@ $(document).ready(function () {
         wizard.submitSuccess(resp);
         wizard.hideButtons();
         wizard.updateProgressBar(0);
+        window.refreshProjectNavigationMenus();
       }, 
       error: function() {
         console.log('error', arguments);
