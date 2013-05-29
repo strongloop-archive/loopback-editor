@@ -1,7 +1,7 @@
 var wizard = require('.'),
 		asteroid = require('asteroid'),
 		path = require('path'),
-    TaskEmitter = require('task-emitter');
+    TaskEmitter = require('sl-task-emitter');
 
 wizard.app.get('/', function(req, res) {
   res.render('data-wizard.ejs');
