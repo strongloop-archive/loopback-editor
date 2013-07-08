@@ -1,12 +1,1 @@
-node_modules/.bin
-node_modules/express
-node_modules/mocha
-node_modules/ejs-locals
-node_modules/underscore
-node_modules/debug
-node_modules/loopback
-node_modules/loopback-project-manager
-node_modules/loopback-module-loader
-node_modules/task-emitter
-node_modules/sl-task-emitter
-node_modules/sl-module-loader
+node_modules

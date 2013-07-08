@@ -1,7 +1,0 @@
-{
-  "module": "loopback-editor-generator",
-  "options": {
-    "label": "Create a New Model",
-    "description": "Create a new Model for your mobile app."
-  }
-}
