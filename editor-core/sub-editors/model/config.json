@@ -1,9 +1,0 @@
-{
-  "module": "asteroid-sub-editor",
-  "options": {
-    "for": "model",
-    "icon": "model.png",
-    "app": true
-  },
-  "main": "model-editor.js"
-}
