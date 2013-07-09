@@ -1,25 +1,16 @@
 {
   "name": "loopback-editor",
   "version": "0.0.0",
-  "description": "ERROR: No README.md file found!",
-  "main": "app.js",
+  "description": "A web-based frontend for building and maintaining LoopBack Projects.",
   "scripts": {
     "test": "mocha"
   },
   "repository": "",
   "author": "",
-  "license": "BSD",
   "dependencies": {
     "debug": "latest",
-    "express": "~3.2.0",
-    "ejs-locals": "~1.0.2",
-    "underscore": "~1.4.4",
-    "loopback": "git+ssh://git@github.com:strongloop/loopback.git",
-    "loopback-project-manager": "git+ssh://git@github.com:strongloop/loopback-project-manager.git",
-    "sl-module-loader": "~0.0.2",
-    "sl-task-emitter": "~0.0.2"
-  },
-  "devDependencies": {
-    "mocha": "~1.9.0"
+    "loopback-project-manager": "git+ssh://git@github.com:strongloop/loopback-workspace.git",
+    "optimist": "~0.5.2",
+    "st": "~0.2.1"
   }
 }
