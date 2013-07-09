@@ -1,0 +1,48 @@
+#!/usr/bin/env node
+var path = require('path');
+var optimist = require('optimist');
+var defaultWorkspace = path.join(__dirname, '..', 'projects');
+var argv = optimist.options({
+    port: {
+      description: 'The port number to listen on.',
+      'default': 3000
+    },
+    root: {
+      description: 'The root directory for projects.',
+      'default': defaultWorkspace
+    },
+    help: {
+      description: 'Show this help message, then exit.'
+    }
+  })
+  .argv;
+
+if (argv.help) {
+  optimist.showHelp();
+  process.exit();
+}
+
+var st = require('st');
+// TODO(schoon) - Export Server.
+// TODO(schoon) - Replace server.handleError with another renderable.
+var server = require('asteroid-workspace/lib/server').createServer(argv);
+var mount = st({
+  path: path.resolve(__dirname, '..', 'public'),
+  url: '/',
+  cache: false,
+  index: 'index.html',
+  passthrough: true
+});
+
+// Add `st` to the bundled Workspace server's existing middleware stack.
+server.router.use(mount);
+
+server.start(function (err) {
+  if (err) {
+    console.error('Failed to listen on port %s with:', server.port);
+    console.error(err.stack || err.message || err);
+    process.exit(2);
+  }
+
+  console.log('Listening on port %s...', server.port);
+});
