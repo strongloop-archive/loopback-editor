@@ -48,12 +48,23 @@
         }
 
         console.log('-> Open Project: ' + name);
-        Workspace.getProject(name)
+        return Workspace.getProject(name)
           .then(function (data) {
             console.log('<- Opened: ', data);
             $scope.setProject(data);
           })
           .then(null, $exceptionHandler);
+      };
+
+      $scope.closeProject = function () {
+        $scope.project = null;
+      };
+
+      $scope.newProject = function () {
+        $scope.project = {
+          name: '',
+          description: ''
+        };
       };
 
       $scope.createProject = function (name, options) {
@@ -72,8 +83,12 @@
           .then(null, $exceptionHandler);
       };
     })
-    .controller('Project', function ($scope, $exceptionHandler, Workspace) {
-      $scope.name = '';
+    .controller('Project', function ($scope) {
+      $scope.addModule = function () {
+        console.log('-> Add Module');
+      };
+    })
+    .controller('ProjectWizard', function ($scope) {
       $scope.templates = [
         {
           label: 'Mobile Backend'
@@ -81,8 +96,9 @@
       ];
       $scope.template = $scope.templates[0];
 
-      $scope.addModule = function () {
-        console.log('-> Add Module');
+      $scope.project = {
+        name: '',
+        description: ''
       };
     })
     .controller('ProjectList', function ($scope, $exceptionHandler, Workspace) {
