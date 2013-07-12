@@ -1,0 +1,24 @@
+<div class="modal" ng-controller="Modal">
+  <div class="modal-header">
+    <h3>Open Project</h3>
+    <a ng-click="dismiss()">&times;</a>
+  </div>
+  <div class="modal-body" ng-controller="ProjectList">
+    <div ng-switch on="names.length">
+      <div ng-switch-when="0">
+        <p>You have no projects.</p>
+        <p><a class="btn" ng-click="createProject()">Create Project</a></p>
+      </div>
+      <div ng-switch-default>
+        <ul class="nav">
+          <li ng-repeat="name in names">
+            <a class="btn" ng-click="openProject(name)">{{name}}</a>
+          </li>
+          <li>
+            <a class="btn" ng-click="createProject()">Create Project</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
