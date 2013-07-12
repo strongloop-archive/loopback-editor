@@ -75,7 +75,7 @@
         }
 
         console.log('-> Create Project: ' + name + ' with ', options);
-        Workspace.createProject(name, options)
+        return Workspace.createProject(name, options)
           .then(function (data) {
             console.log('<- Created:', data);
             $scope.setProject(data);
@@ -109,6 +109,13 @@
         name: '',
         description: ''
       };
+
+      $scope.createProject = function(name, options) {
+        $scope.$parent.createProject(name, options)
+          .then(function () {
+            $scope.dismiss();
+          });
+      };
     })
     .controller('ProjectList', function ($scope, $exceptionHandler, Workspace) {
       $scope.names = [];
@@ -123,6 +130,13 @@
         $scope.$parent.removeProject(name)
           .then(function () {
             $scope.names.splice($scope.names.indexOf(name), 1);
+          });
+      };
+
+      $scope.openProject = function (name) {
+        $scope.$parent.openProject(name)
+          .then(function () {
+            $scope.dismiss();
           });
       };
     })
