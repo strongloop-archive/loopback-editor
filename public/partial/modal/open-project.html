@@ -12,7 +12,10 @@
       <div ng-switch-default>
         <ul class="nav">
           <li ng-repeat="name in names">
-            <a class="btn" ng-click="openProject(name)">{{name}}</a>
+            <div class="btn-group">
+              <a class="btn" ng-click="openProject(name)">{{name}}</a>
+              <a class="btn btn-danger" ng-click="removeProject(name)"><i class="icon-remove"></i> Remove</a>
+            </div>
           </li>
           <li>
             <a class="btn" ng-click="createProject()">Create Project</a>

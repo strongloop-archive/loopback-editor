@@ -82,6 +82,15 @@
           })
           .then(null, $exceptionHandler);
       };
+
+      $scope.removeProject = function (name) {
+        console.log('-> Remove Project: ', + name);
+        return Workspace.removeProject(name)
+          .then(function (data) {
+            console.log('<- Removed:', data);
+          })
+          .then(null, $exceptionHandler);
+      };
     })
     .controller('Project', function ($scope) {
       $scope.addModule = function () {
@@ -109,6 +118,13 @@
           $scope.names = data.names;
         })
         .then(null, $exceptionHandler);
+
+      $scope.removeProject = function (name) {
+        $scope.$parent.removeProject(name)
+          .then(function () {
+            $scope.names.splice($scope.names.indexOf(name), 1);
+          });
+      };
     })
     .controller('Modal', function ($scope) {
       $scope.dismiss = function () {
