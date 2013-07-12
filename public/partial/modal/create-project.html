@@ -4,7 +4,7 @@
     <a ng-click="dismiss()">&times;</a>
   </div>
   <div class="modal-body" ng-controller="ProjectWizard">
-    <form class="form-horizontal">
+    <form class="form-horizontal" ng-submit="createProject(project.name, project)">
       <div class="control-group">
         <label class="control-label" for="name">Name</label>
         <div class="controls">
@@ -19,8 +19,8 @@
       </div>
       <div class="control-group">
         <div class="controls">
-          <button class="btn" ng-click="openProject()">&lt; Open</button>
-          <button class="btn btn-primary" ng-click="createProject(project.name, project)">Create</button>
+          <a class="btn" ng-click="openProject()">&lt; Open</a>
+          <button type="submit" class="btn btn-primary">Create</button>
         </div>
       </div>
     </form>
