@@ -1,0 +1,28 @@
+<div class="modal" ng-controller="Modal">
+  <div class="modal-header">
+    <h3>Create Project</h3>
+    <a ng-click="dismiss()">&times;</a>
+  </div>
+  <div class="modal-body" ng-controller="Project">
+    <form class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="name">Name</label>
+        <div class="controls">
+          <input type="text" id="name" required ng-model="name">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="template">Template</label>
+        <div class="controls">
+          <select ng-model="template" ng-options="t.label for t in templates"></select>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <button class="btn" ng-click="openProject()">&lt; Open</button>
+          <button class="btn btn-primary" ng-click="createProject(name)">Create</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
