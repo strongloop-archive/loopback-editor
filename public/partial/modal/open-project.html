@@ -1,7 +1,7 @@
 <div class="modal" ng-controller="Modal">
   <div class="modal-header">
+    <a class="close" ng-click="dismiss()">&times;</a>
     <h3>Open Project</h3>
-    <a ng-click="dismiss()">&times;</a>
   </div>
   <div class="modal-body" ng-controller="ProjectList">
     <div ng-switch on="names.length">

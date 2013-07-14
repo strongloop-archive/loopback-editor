@@ -1,7 +1,7 @@
 <div class="modal" ng-controller="Modal">
   <div class="modal-header">
+    <a class="close" ng-click="dismiss()">&times;</a>
     <h3>Create Project</h3>
-    <a ng-click="dismiss()">&times;</a>
   </div>
   <div class="modal-body" ng-controller="ProjectWizard">
     <form class="form-horizontal" ng-submit="createProject(project.name, project)">
