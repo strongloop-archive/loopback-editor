@@ -23,13 +23,15 @@
           <hr>
           <p><a class="btn" ng-click="openProject()"><i class="icon-folder-open"></i>Open Project</a></p>
           <ul class="nav nav-pills nav-stacked">
-            <li class="active"><a>Modules go here</a></li>
+            <li ng-repeat="name in project.modules">
+              <a ng-click="openModuleEditor(name)">{{name}}</a>
+            </li>
           </ul>
           <a class="btn" ng-click="addModule()">Add Module</a>
         </div>
         <div class="span9">
           <div ng-include="modal"></div>
-          <div ng-view></div>
+          <div ng-include="editor"></div>
         </div>
       </div>
     </div>

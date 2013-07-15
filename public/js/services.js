@@ -27,6 +27,11 @@
         return $http['delete']('/projects/' + name).then(pickData);
       }
 
+      Workspace.getModuleForProject = getModuleForProject;
+      function getModuleForProject(name, subname) {
+        return $http.get('/projects/' + name + '/modules/' + subname).then(pickData);
+      }
+
       Workspace.addModuleToProject = addModuleToProject;
       function addModuleToProject(name, subname, options) {
         if (!options.type) {
