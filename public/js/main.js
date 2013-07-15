@@ -4,6 +4,10 @@
     CREATE_PROJECT: '/partial/modal/create-project.html'
   };
 
+  if (CodeMirror) {
+    CodeMirror.defaults.theme = 'monokai';
+    CodeMirror.defaults.mode = 'application/json';
+  }
 
   angular.module('asteroid.editor', ['ui.bootstrap', 'ui.codemirror', 'asteroid.services', 'asteroid.editor.tools'])
     .controller('Editor', function ($scope, $exceptionHandler, Workspace, $q) {
