@@ -29,13 +29,23 @@
           </ul>
           <a class="btn" ng-click="addModule()">Add Module</a>
         </div>
+        <div class="span3 well" ng-show="ui.addModule" ng-controller="ToolList">
+          <a class="pull-right close" ng-click="ui.addModule=false">&times;</a>
+          <br class="clear">
+          <ul class="nav nav-pills nav-stacked">
+            <li ng-repeat="tool in tools">
+              <a ng-click="openTool(tool.editor)">{{tool.name}}</a>
+            </li>
+          </ul>
+        </div>
         <div class="span9">
-          <div ng-include="modal"></div>
           <div ng-include="editor"></div>
+          <div ng-include="modal"></div>
         </div>
       </div>
     </div>
     <script src="/js/ui-bootstrap-tpls-0.4.0.min.js"></script>
+    <script src="/tools/index.js"></script>
     <script src="/js/services.js"></script>
     <script src="/js/main.js"></script>
   </body>
