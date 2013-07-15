@@ -4,12 +4,15 @@
     CREATE_PROJECT: '/partial/modal/create-project.html'
   };
 
-  angular.module('asteroid.editor', ['ui.bootstrap', 'ui.codemirror', 'asteroid.services', 'asteroid.editor.tools'])
+  angular.module('asteroid.editor', ['ui.bootstrap', 'asteroid.services', 'asteroid.editor.tools'])
     .controller('Editor', function ($scope, $exceptionHandler, Workspace, $q) {
       $scope.project = null;
       $scope.modal = '';
       $scope.editor = '';
       $scope.module = null;
+      $scope.ui = {
+        addModule: false
+      };
 
       $scope.safeApply = function () {
         if (!$scope.$$phase && !$scope.$root.$$phase) {
@@ -111,14 +114,34 @@
         return Workspace.addModuleToProject($scope.project.name, $scope.module.name, $scope.module)
           .then(function (data) {
             console.log('<- Updated:', data);
+            $scope.openModuleEditor($scope.module.name);
           })
           .then(null, $exceptionHandler);
       };
-    })
-    .controller('Project', function ($scope) {
+
+      $scope.removeModule = function () {
+        console.log('-> Removing Module');
+        return Workspace.removeModuleFromProject($scope.project.name, $scope.module.name)
+          .then(function (data) {
+            console.log('<- Removed:', data);
+            $scope.module = null;
+            $scope.editor = null;
+          })
+          .then(null, $exceptionHandler);
+      };
+
+      $scope.openTool = function (html) {
+        $scope.editor = html;
+        $scope.ui.addModule = false;
+      };
+
       $scope.addModule = function () {
         console.log('-> Add Module');
+        $scope.ui.addModule = true;
+        $scope.module = {};
       };
+    })
+    .controller('Project', function ($scope) {
     })
     .controller('ProjectWizard', function ($scope) {
       $scope.templates = [
