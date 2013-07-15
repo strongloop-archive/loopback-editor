@@ -4,16 +4,12 @@
     CREATE_PROJECT: '/partial/modal/create-project.html'
   };
 
-  angular.module('asteroid.editor', ['ui.bootstrap', 'asteroid.services'])
-    .config(function ($routeProvider, $locationProvider) {
-      $routeProvider
-        .when('/', {});
-
-      $locationProvider.html5Mode(false);
-    })
-    .controller('Editor', function ($scope, $exceptionHandler, Workspace) {
+  angular.module('asteroid.editor', ['ui.bootstrap', 'ui.codemirror', 'asteroid.services', 'asteroid.editor.tools'])
+    .controller('Editor', function ($scope, $exceptionHandler, Workspace, $q) {
       $scope.project = null;
       $scope.modal = '';
+      $scope.editor = '';
+      $scope.module = null;
 
       $scope.safeApply = function () {
         if (!$scope.$$phase && !$scope.$root.$$phase) {
@@ -84,10 +80,37 @@
       };
 
       $scope.removeProject = function (name) {
-        console.log('-> Remove Project: ', + name);
+        console.log('-> Remove Project: ' + name);
         return Workspace.removeProject(name)
           .then(function (data) {
             console.log('<- Removed:', data);
+          })
+          .then(null, $exceptionHandler);
+      };
+
+      $scope.openModuleEditor = function (name) {
+        if (!$scope.project || !$scope.project.name) {
+          return $q.reject('No project loaded.');
+        }
+
+        console.log('-> Open Module: ' + name);
+        return Workspace.getModuleForProject($scope.project.name, name)
+          .then(function (data) {
+            console.log('<- Opened: ', data);
+            $scope.editor = data.editor;
+
+            // TODO - Should this move?
+            $scope.module = data.data;
+            $scope.module.name = name;
+          })
+          .then(null, $exceptionHandler);
+      };
+
+      $scope.updateModule = function () {
+        console.log('-> Updating Module');
+        return Workspace.addModuleToProject($scope.project.name, $scope.module.name, $scope.module)
+          .then(function (data) {
+            console.log('<- Updated:', data);
           })
           .then(null, $exceptionHandler);
       };
