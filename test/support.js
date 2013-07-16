@@ -1,5 +1,5 @@
 /**
- * asteroid editor test setup and support.
+ * loopback editor test setup and support.
  */
  
 assert = require('assert');

@@ -1,5 +1,5 @@
 var wizard = require('.'),
-		asteroid = require('asteroid'),
+		loopback = require('loopback'),
 		path = require('path'),
     TaskEmitter = require('sl-task-emitter');
 

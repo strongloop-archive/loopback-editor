@@ -1,5 +1,5 @@
 {
-  "module": "asteroid-editor-utility",
+  "module": "loopback-editor-utility",
   "options": {
     "title": "API"
   },

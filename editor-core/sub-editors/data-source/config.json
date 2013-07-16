@@ -1,5 +1,5 @@
 {
-  "module": "asteroid-sub-editor",
+  "module": "loopback-sub-editor",
   "options": {
     "for": "data-source",
     "icon": "data-source.png"

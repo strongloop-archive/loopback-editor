@@ -2,19 +2,19 @@ body {
   min-width: 960px;
 }
 
-#global-asteroid-navbar {
+#global-loopback-navbar {
   margin-bottom: 0px;
 }
 
-#global-asteroid-navbar .navbar-inner {
+#global-loopback-navbar .navbar-inner {
   border-radius: 0;
 }
 
-#global-asteroid-subnav {
+#global-loopback-subnav {
   margin-top: -1px;
 }
 
-#global-asteroid-subnav .navbar-inner {
+#global-loopback-subnav .navbar-inner {
   border-radius: 0; 
 }
 

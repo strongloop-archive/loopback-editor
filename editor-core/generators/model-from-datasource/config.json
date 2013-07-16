@@ -1,5 +1,5 @@
 {
-  "module": "asteroid-editor-generator",
+  "module": "loopback-editor-generator",
   "options": {
     "label": "Create a Model from a DataSource",
     "description": "Connect your mobile app to an existing data source."

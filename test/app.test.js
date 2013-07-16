@@ -1,4 +1,4 @@
-describe("Asteroid Editor", function() {
+describe("Loopback Editor", function() {
 
   it('should', function() {
   });
