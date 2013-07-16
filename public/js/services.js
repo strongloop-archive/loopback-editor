@@ -1,5 +1,5 @@
 (function (global) {
-  angular.module('asteroid.services', [])
+  angular.module('asteroid.services', ['$strap'])
     .service('Workspace', function ($http, $q) {
       var Workspace = {};
 
@@ -241,5 +241,54 @@
 
       init();
       return Session;
+    })
+    .service('Modal', function ($modal) {
+      var Modal = {};
+      var Modals = {
+        OPEN_PROJECT: prefetchModal('/partial/modal/open-project.html'),
+        CREATE_PROJECT: prefetchModal('/partial/modal/create-project.html')
+      };
+      var activeModal = null;
+
+      function prefetchModal(template) {
+        return $modal({
+          template: template,
+          persist: true,
+          show: false,
+          backdrop: 'static'
+        });
+      }
+
+      Modal.hideActiveModal = hideActiveModal;
+      function hideActiveModal() {
+        if (!activeModal) {
+          return;
+        }
+
+        activeModal.modal('hide');
+        activeModal = null;
+      }
+
+      Modal.showOpenProject = showOpenProject;
+      function showOpenProject() {
+        hideActiveModal();
+
+        return Modals.OPEN_PROJECT.then(function ($el) {
+          $el.modal('show');
+          activeModal = $el;
+        });
+      }
+
+      Modal.showCreateProject = showCreateProject;
+      function showCreateProject() {
+        hideActiveModal();
+
+        return Modals.CREATE_PROJECT.then(function ($el) {
+          $el.modal('hide');
+          activeModal = $el;
+        });
+      }
+
+      return Modal;
     });
 }(this));
