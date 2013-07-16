@@ -4,24 +4,26 @@
     <h3>Open Project</h3>
   </div>
   <div class="modal-body" ng-controller="ProjectList">
-    <div ng-switch on="names.length">
+    <div ng-switch on="getAllProjects().length">
       <div ng-switch-when="0">
         <p>You have no projects.</p>
-        <p><a class="btn" ng-click="createProject()">Create Project</a></p>
+        <p><a class="btn" ng-click="showCreateProject()">Create Project</a></p>
       </div>
-      <div ng-switch-default>
+      <div ng-switch-default class="row-fluid">
         <ul class="nav">
-          <li ng-repeat="name in names">
-            <div class="btn-group">
-              <a class="btn" ng-click="openProject(name)">{{name}}</a>
-              <a class="btn btn-danger" ng-click="removeProject(name)"><i class="icon-remove"></i> Remove</a>
+          <li ng-repeat="name in getAllProjects()">
+            <div class="btn-group span12">
+              <a class="btn span9" ng-click="openProject(name)">{{name}}</a>
+              <a class="btn btn-danger span3" ng-click="removeProject(name)"><i class="icon-remove"></i></a>
             </div>
-          </li>
-          <li>
-            <a class="btn" ng-click="createProject()">Create Project</a>
           </li>
         </ul>
       </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="row-fluid">
+      <a class="btn btn-inverse span12" ng-click="showCreateProject()">Create Project <i class="icon-chevron-right"></i></a>
     </div>
   </div>
 </div>
