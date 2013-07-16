@@ -47,5 +47,71 @@
       }
 
       return Workspace;
+    })
+    .service('Session', function ($q, Workspace) {
+      var activeProject = null;
+      var activeModule = null;
+      var Session = {};
+
+      /**
+       * Returns the currently-active Project.
+       */
+      Session.getActiveProject = getActiveProject;
+      function getActiveProject() {
+        return activeProject;
+      }
+
+      /**
+       * Closes the currently-active Project.
+       */
+      Session.closeProject = closeProject;
+      function closeProject() {
+        activeProject = null;
+        return getActiveProject();
+      }
+
+      /**
+       * Creates a brand-new Project on the server, replacing the currently-
+       * active Project with the new one.
+       *
+       * Returns a Promise for the new Project.
+       */
+      Session.createNewProject = createNewProject;
+      function createNewProject(name, options) {
+        return Workspace.createProject(name, options)
+          .then(function (data) {
+            activeProject = data;
+            return data;
+          });
+      }
+
+      /**
+       * Updates the currently-active Project with `name`, downloaded from the
+       * server.
+       *
+       * Returns a Promise for the loaded Project.
+       */
+      Session.loadProject = loadProject;
+      function loadProject(name) {
+        return Workspace.getProject(name)
+          .then(function (data) {
+            activeProject = data;
+            return data;
+          });
+      }
+
+      /**
+       * Deletes the `name` Project from the server. If it is the currently-
+       * active Project, it will be closed.
+       *
+       * Returns a Promise for the deleted Project.
+       */
+      Session.removeProject = removeProject;
+      function removeProject(name) {
+        activeProject = null;
+        return Workspace.removeProject(name);
+      }
+
+      return Session;
     });
 }(this));
