@@ -48,10 +48,37 @@
 
       return Workspace;
     })
-    .service('Session', function ($q, Workspace) {
+    .service('LocalStorage', function () {
+      var store = localStorage || {};
+
+      function get(key) {
+        try {
+          return JSON.parse(store[key] || 'null');
+        } catch (e) {
+          // This is only triggered if the value is bad, so we should reset it.
+          set(key, null);
+          return null;
+        }
+      }
+
+      function set(key, value) {
+        store[key] = JSON.stringify(value);
+        return value;
+      }
+
+      return {
+        get: get,
+        set: set
+      };
+    })
+    .service('Session', function ($q, Workspace, LocalStorage) {
       var activeProject = null;
       var activeModule = null;
       var Session = {};
+
+      if (LocalStorage.get('lastProjectName')) {
+        loadProject(LocalStorage.get('lastProjectName'));
+      }
 
       /**
        * Returns the currently-active Project.
@@ -60,14 +87,18 @@
       function getActiveProject() {
         return activeProject;
       }
+      function setActiveProject(project) {
+        activeProject = project;
+        LocalStorage.set('lastProjectName', project && project.name || null);
+        return project;
+      }
 
       /**
        * Closes the currently-active Project.
        */
       Session.closeProject = closeProject;
       function closeProject() {
-        activeProject = null;
-        return getActiveProject();
+        return setActiveProject(null);
       }
 
       /**
@@ -80,8 +111,7 @@
       function createNewProject(name, options) {
         return Workspace.createProject(name, options)
           .then(function (data) {
-            activeProject = data;
-            return data;
+            return setActiveProject(data);
           });
       }
 
@@ -95,8 +125,7 @@
       function loadProject(name) {
         return Workspace.getProject(name)
           .then(function (data) {
-            activeProject = data;
-            return data;
+            return setActiveProject(data);
           });
       }
 
@@ -108,7 +137,10 @@
        */
       Session.removeProject = removeProject;
       function removeProject(name) {
-        activeProject = null;
+        if (name === activeProject.name) {
+          setActiveProject(null);
+        }
+
         return Workspace.removeProject(name);
       }
 
