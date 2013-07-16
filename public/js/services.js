@@ -76,12 +76,17 @@
       var activeModule = null;
       var Session = {};
 
-      if (LocalStorage.get('lastProjectName')) {
-        loadProject(LocalStorage.get('lastProjectName')).then(function () {
-          if (LocalStorage.get('lastModuleName')) {
-            return loadModule(LocalStorage.get('lastModuleName'));
-          }
-        });
+      function init() {
+        var projectName = LocalStorage.get('lastProjectName');
+        var moduleName = LocalStorage.get('lastModuleName');
+
+        if (projectName) {
+          loadProject(projectName).then(function () {
+            if (moduleName) {
+              return loadModule(moduleName);
+            }
+          });
+        }
       }
 
       /**
@@ -189,6 +194,8 @@
 
         return Workspace.addModuleToProject(activeProject.name, name, options)
           .then(function (data) {
+            // HACK
+            data.name = name;
             return setActiveModule(data);
           });
       }
@@ -207,6 +214,8 @@
 
         return Workspace.getModuleForProject(activeProject.name, name)
           .then(function (data) {
+            // HACK
+            data.name = name;
             return setActiveModule(data);
           });
       }
@@ -230,6 +239,7 @@
         return Workspace.removeModuleFromProject(activeProject.name, name);
       }
 
+      init();
       return Session;
     });
 }(this));
