@@ -77,7 +77,11 @@
       var Session = {};
 
       if (LocalStorage.get('lastProjectName')) {
-        loadProject(LocalStorage.get('lastProjectName'));
+        loadProject(LocalStorage.get('lastProjectName')).then(function () {
+          if (LocalStorage.get('lastModuleName')) {
+            return loadModule(LocalStorage.get('lastModuleName'));
+          }
+        });
       }
 
       /**
@@ -90,6 +94,10 @@
       function setActiveProject(project) {
         activeProject = project;
         LocalStorage.set('lastProjectName', project && project.name || null);
+
+        // Since we've changed projects, the current Module is invalid.
+        setActiveModule(null);
+
         return project;
       }
 
@@ -142,6 +150,84 @@
         }
 
         return Workspace.removeProject(name);
+      }
+
+      /**
+       * Returns the currently-active Module.
+       */
+      Session.getActiveModule = getActiveModule;
+      function getActiveModule() {
+        return activeModule;
+      }
+      function setActiveModule(module) {
+        activeModule = module;
+        LocalStorage.set('lastModuleName', module && module.name || null);
+        return module;
+      }
+
+      /**
+       * Closes the currently-active Module.
+       */
+      Session.closeModule = closeModule;
+      function closeModule() {
+        setActiveModule(null);
+      }
+
+      /**
+       * Creates a brand-new Module on the server, replacing the currently-
+       * active Module with the new one. The new Module will be created within
+       * the currently-active Project.
+       *
+       * Returns a Promise for the new Module.
+       */
+      Session.createNewModule = createNewModule;
+      Session.updateModule = createNewModule;
+      function createNewModule(name, options) {
+        if (!activeProject) {
+          return $q.when(null);
+        }
+
+        return Workspace.addModuleToProject(activeProject.name, name, options)
+          .then(function (data) {
+            return setActiveModule(data);
+          });
+      }
+
+      /**
+       * Updates the currently-active Module with `name`, downloaded from the
+       * server and expected to be within the currently-active Project.
+       *
+       * Returns a Promise for the loaded Module.
+       */
+      Session.loadModule = loadModule;
+      function loadModule(name) {
+        if (!activeProject) {
+          return $q.when(null);
+        }
+
+        return Workspace.getModuleForProject(activeProject.name, name)
+          .then(function (data) {
+            return setActiveModule(data);
+          });
+      }
+
+      /**
+       * Deletes the `name` Module from within the currently-active Project. If
+       * it is the currently-active Module, it will be closed.
+       *
+       * Returns a Module for the deleted Module.
+       */
+      Session.removeModule = removeModule;
+      function removeModule(name) {
+        if (!activeProject) {
+          return $q.when(null);
+        }
+
+        if (activeModule.name === name) {
+          setActiveModule(null);
+        }
+
+        return Workspace.removeModuleFromProject(activeProject.name, name);
       }
 
       return Session;
