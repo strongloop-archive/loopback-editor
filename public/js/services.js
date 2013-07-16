@@ -74,6 +74,7 @@
     .service('Session', function ($q, Workspace, LocalStorage) {
       var activeProject = null;
       var activeModule = null;
+      var allProjects = [];
       var Session = {};
 
       function init() {
@@ -87,6 +88,23 @@
             }
           });
         }
+
+        loadAllProjects();
+      }
+
+      /**
+       * Returns the full list of available Projects.
+       */
+      Session.getAllProjects = getAllProjects;
+      function getAllProjects() {
+        return allProjects;
+      }
+      function loadAllProjects() {
+        return Workspace.getProjects()
+          .then(function (data) {
+            // TODO: More data?
+            allProjects = data.names;
+          });
       }
 
       /**
@@ -124,6 +142,7 @@
       function createNewProject(name, options) {
         return Workspace.createProject(name, options)
           .then(function (data) {
+            loadAllProjects();
             return setActiveProject(data);
           });
       }
@@ -150,11 +169,15 @@
        */
       Session.removeProject = removeProject;
       function removeProject(name) {
-        if (name === activeProject.name) {
+        if (activeProject && (activeProject.name === name)) {
           setActiveProject(null);
         }
 
-        return Workspace.removeProject(name);
+        return Workspace.removeProject(name)
+          .then(function (data) {
+            loadAllProjects();
+            return data;
+          });
       }
 
       /**
@@ -259,6 +282,12 @@
         });
       }
 
+      function showModal($el) {
+        $el.modal('show');
+        activeModal = $el;
+        return $el;
+      }
+
       Modal.hideActiveModal = hideActiveModal;
       function hideActiveModal() {
         if (!activeModal) {
@@ -273,20 +302,14 @@
       function showOpenProject() {
         hideActiveModal();
 
-        return Modals.OPEN_PROJECT.then(function ($el) {
-          $el.modal('show');
-          activeModal = $el;
-        });
+        return Modals.OPEN_PROJECT.then(showModal);
       }
 
       Modal.showCreateProject = showCreateProject;
       function showCreateProject() {
         hideActiveModal();
 
-        return Modals.CREATE_PROJECT.then(function ($el) {
-          $el.modal('hide');
-          activeModal = $el;
-        });
+        return Modals.CREATE_PROJECT.then(showModal);
       }
 
       return Modal;

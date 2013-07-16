@@ -1,19 +1,6 @@
 (function (global) {
-  var Modals = {
-    OPEN_PROJECT: '/partial/modal/open-project.html',
-    CREATE_PROJECT: '/partial/modal/create-project.html'
-  };
-
-  angular.module('asteroid.editor', ['ui.bootstrap', 'asteroid.services', 'asteroid.editor.tools'])
-    .controller('Editor', function ($scope, $exceptionHandler, Workspace, $q) {
-      $scope.project = null;
-      $scope.modal = '';
-      $scope.editor = '';
-      $scope.module = null;
-      $scope.ui = {
-        addModule: false
-      };
-
+  angular.module('asteroid.editor', ['asteroid.services', 'asteroid.editor.tools'])
+    .controller('Editor', function ($scope, $exceptionHandler, Workspace, $q, Session) {
       $scope.safeApply = function () {
         if (!$scope.$$phase && !$scope.$root.$$phase) {
           $scope.$apply();
@@ -143,7 +130,7 @@
     })
     .controller('Project', function ($scope) {
     })
-    .controller('ProjectWizard', function ($scope) {
+    .controller('ProjectWizard', function ($scope, Session, Modal) {
       $scope.templates = [
         {
           label: 'Mobile Backend'
@@ -151,44 +138,47 @@
       ];
       $scope.template = $scope.templates[0];
 
-      $scope.project = {
-        name: '',
-        description: ''
-      };
+      function init() {
+        $scope.project = {
+          name: '',
+          description: ''
+        };
+      }
 
       $scope.createProject = function(name, options) {
-        $scope.$parent.createProject(name, options)
-          .then(function () {
-            $scope.dismiss();
-          });
+        init();
+        return Session.createNewProject(name, options).then($scope.dismiss);
       };
+
+      init();
     })
-    .controller('ProjectList', function ($scope, $exceptionHandler, Workspace) {
+    .controller('ProjectList', function ($scope, $exceptionHandler, Session, Modal) {
       $scope.names = [];
 
-      Workspace.getProjects()
-        .then(function (data) {
-          $scope.names = data.names;
-        })
-        .then(null, $exceptionHandler);
+      $scope.getAllProjects = function () {
+        return Session.getAllProjects();
+      };
 
       $scope.removeProject = function (name) {
-        $scope.$parent.removeProject(name)
-          .then(function () {
-            $scope.names.splice($scope.names.indexOf(name), 1);
-          });
+        return Session.removeProject(name);
       };
 
       $scope.openProject = function (name) {
-        $scope.$parent.openProject(name)
-          .then(function () {
-            $scope.dismiss();
-          });
+        return Session.loadProject(name)
+          .then($scope.dismiss);
       };
     })
-    .controller('Modal', function ($scope) {
+    .controller('Modal', function ($scope, Modal) {
       $scope.dismiss = function () {
-        $scope.hideModal();
+        return Modal.hideActiveModal();
+      };
+
+      $scope.showOpenProject = function () {
+        return Modal.showOpenProject();
+      };
+
+      $scope.showCreateProject = function () {
+        return Modal.showCreateProject();
       };
     });
 }(this));
