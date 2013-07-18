@@ -27,6 +27,11 @@
         return $http['delete']('/projects/' + name).then(pickData);
       }
 
+      Workspace.getModulesForProject = getModulesForProject;
+      function getModulesForProject(name) {
+        return $http.get('/projects/' + name + '/modules').then(pickData);
+      }
+
       Workspace.getModuleForProject = getModuleForProject;
       function getModuleForProject(name, subname) {
         return $http.get('/projects/' + name + '/modules/' + subname).then(pickData);
@@ -75,6 +80,7 @@
       var activeProject = null;
       var activeModule = null;
       var allProjects = [];
+      var projectModules = [];
       var Session = {};
 
       function init() {
@@ -118,8 +124,11 @@
         activeProject = project;
         LocalStorage.set('lastProjectName', project && project.name || null);
 
-        // Since we've changed projects, the current Module is invalid.
+        // Since we've changed projects, all current Module information is
+        // invalid.
         setActiveModule(null);
+        projectModules = null;
+        loadProjectModules();
 
         return project;
       }
@@ -181,6 +190,28 @@
       }
 
       /**
+       * Returns the full list of Modules within the active Project.
+       */
+      Session.getProjectModules = getProjectModules;
+      function getProjectModules() {
+        return projectModules;
+      }
+      function loadProjectModules() {
+        if (!activeProject) {
+          return $q.when(null);
+        }
+
+        var name = activeProject.name;
+
+        return Workspace.getModulesForProject(name)
+          .then(function (data) {
+            if (name === activeProject.name) {
+              projectModules = data;
+            }
+          });
+      }
+
+      /**
        * Returns the currently-active Module.
        */
       Session.getActiveModule = getActiveModule;
@@ -219,6 +250,7 @@
           .then(function (data) {
             // HACK
             data.name = name;
+            loadProjectModules();
             return setActiveModule(data);
           });
       }
@@ -259,7 +291,11 @@
           setActiveModule(null);
         }
 
-        return Workspace.removeModuleFromProject(activeProject.name, name);
+        return Workspace.removeModuleFromProject(activeProject.name, name)
+          .then(function (data) {
+            loadProjectModules();
+            return data;
+          });
       }
 
       init();
@@ -269,7 +305,8 @@
       var Modal = {};
       var Modals = {
         OPEN_PROJECT: prefetchModal('/partial/modal/open-project.html'),
-        CREATE_PROJECT: prefetchModal('/partial/modal/create-project.html')
+        CREATE_PROJECT: prefetchModal('/partial/modal/create-project.html'),
+        TOOLBOX: prefetchModal('/partial/modal/toolbox.html')
       };
       var activeModal = null;
 
@@ -310,6 +347,26 @@
         hideActiveModal();
 
         return Modals.CREATE_PROJECT.then(showModal);
+      }
+
+      Modal.showToolbox = showToolbox;
+      function showToolbox() {
+        hideActiveModal();
+
+        return Modals.TOOLBOX.then(showModal);
+      }
+
+      Modal.showTemplate = showTemplate;
+      function showTemplate(template) {
+        hideActiveModal();
+
+        return $modal({
+          template: template,
+          persist: false,
+          show: false,
+          backdrop: 'static'
+        })
+          .then(showModal);
       }
 
       return Modal;
