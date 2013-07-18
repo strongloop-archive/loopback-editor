@@ -1,0 +1,13 @@
+<div class="modal" ng-controller="Modal">
+  <div class="modal-header">
+    <a class="close" ng-click="dismiss()">&times;</a>
+    <h3>Toolbox</h3>
+  </div>
+  <div class="modal-body" ng-controller="ToolList">
+    <ul class="nav nav-pills nav-stacked">
+      <li ng-repeat="tool in tools">
+        <a ng-click="openTool(tool)">{{tool.name}}</a>
+      </li>
+    </ul>
+  </div>
+</div>
