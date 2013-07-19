@@ -1,6 +1,17 @@
 (function (global) {
   angular.module('asteroid.editor', ['asteroid.services', 'asteroid.editor.tools'])
     .controller('Editor', function ($scope, $exceptionHandler, $q, Session) {
+      $scope.updateModule = function (name, options) {
+        console.log(options);
+        return Session.createNewModule(name, options)
+          .then(null, $exceptionHandler);
+      };
+
+      $scope.removeModule = function (name) {
+        return Session.removeModule(name)
+          .then(null, $exceptionHandler);
+      };
+
       $scope.getActiveModule = function () {
         return Session.getActiveModule();
       };
