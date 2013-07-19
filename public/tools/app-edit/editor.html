@@ -7,6 +7,12 @@
       </div>
     </div>
     <div class="control-group">
+      <label for="port" class="control-label">Port</label>
+      <div class="controls">
+        <input type="number" id="port" required ng-model="getActiveModule().source.port">
+      </div>
+    </div>
+    <div class="control-group">
       <label class="control-label" for="description">Description</label>
       <div class="controls">
         <textarea id="description" cols="30" rows="10" ng-model="getActiveModule().source.description"></textarea>

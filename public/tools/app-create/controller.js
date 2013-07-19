@@ -3,6 +3,7 @@
 function CreateAppCtrl($scope, $q, Session) {
   $scope.module = {
     name: '',
+    port: 3000,
     description: ''
   };
 
