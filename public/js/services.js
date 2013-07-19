@@ -248,10 +248,13 @@
 
         return Workspace.addModuleToProject(activeProject.name, name, options)
           .then(function (data) {
-            // HACK
+            // Guarantee that `name` exists.
             data.name = name;
-            loadProjectModules();
-            return setActiveModule(data);
+
+            return loadProjectModules()
+              .then(function () {
+                return setActiveModule(data);
+              });
           });
       }
 
@@ -269,8 +272,9 @@
 
         return Workspace.getModuleForProject(activeProject.name, name)
           .then(function (data) {
-            // HACK
+            // Guarantee that `name` exists.
             data.name = name;
+
             return setActiveModule(data);
           });
       }
