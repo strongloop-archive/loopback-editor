@@ -7,6 +7,10 @@
         {
           name: 'Create Application',
           editor: '/tools/app-create/editor.html'
+        },
+        {
+          name: 'Create In-Memory Data Source',
+          editor: '/tools/data-source-memory-create/editor.html'
         }
       ];
 
