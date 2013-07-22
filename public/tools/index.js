@@ -11,6 +11,10 @@
         {
           name: 'Create In-Memory Data Source',
           editor: '/tools/data-source-memory-create/editor.html'
+        },
+        {
+          name: 'Create Model',
+          editor: '/tools/model-create/editor.html'
         }
       ];
 
