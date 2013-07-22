@@ -1,0 +1,45 @@
+<script src="/tools/model-edit/controller.js"></script>
+<div ng-controller="EditModelCtrl">
+  <h2>Model: {{getActiveModule().source.name}}</h2>
+  <form class="form-horizontal" ng-submit="updateModule(getActiveModule().name, getActiveModule().source)">
+    <div class="control-group">
+      <label class="control-label" for="name">Name</label>
+      <div class="controls">
+        <input type="text" id="name" required ng-model="getActiveModule().source.name">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="description">Description</label>
+      <div class="controls">
+        <textarea id="description" ng-model="getActiveModule().source.description"></textarea>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="applications">Application</label>
+      <div class="controls">
+        <input type="text" id="applications" ng-model="getActiveModule().source.applications" bs-typeahead="allModules" data-min-length="0"></input>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="data-source">Data Source</label>
+      <div class="controls">
+        <input type="text" id="data-source" ng-model="getActiveModule().source['data-source']" bs-typeahead="allModules" data-min-length="0"></input>
+      </div>
+    </div>
+    <hr>
+    <h3>Properties</h3>
+    <div ng-repeat="property in getAllProperties()">
+      <input type="text" ng-model="property.key"></input>
+      <select ng-model="property.value" ng-options="name for name in allTypes"></select>
+      <a class="btn btn-danger" ng-click="removeProperty($index)"><i class="icon-trash"></i></a>
+    </div>
+    <a class="btn" ng-click="addProperty()">Add</a>
+    <hr>
+    <div class="control-group">
+      <div class="controls">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a class="pull-right btn btn-danger" ng-click="removeModule(getActiveModule().name)">Remove</a>
+      </div>
+    </div>
+  </form>
+</div>
