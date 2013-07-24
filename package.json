@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "A web-based frontend for building and maintaining LoopBack Projects.",
   "scripts": {
-    "test": "mocha"
+    "test": "karma start karma.conf.js"
   },
   "repository": "",
   "author": "",
@@ -12,5 +12,8 @@
     "loopback-project-manager": "git+ssh://git@github.com:strongloop/loopback-workspace.git",
     "optimist": "~0.5.2",
     "st": "~0.2.1"
+  },
+  "devDependencies": {
+    "karma": "~0.8.7"
   }
 }
