@@ -25,7 +25,7 @@ if (argv.help) {
 var st = require('st');
 // TODO(schoon) - Export Server.
 // TODO(schoon) - Replace server.handleError with another renderable.
-var server = require('asteroid-workspace/lib/server').createServer(argv);
+var server = require('loopback-workspace/lib/server').createServer(argv);
 var mount = st({
   path: path.resolve(__dirname, '..', 'public'),
   url: '/',
