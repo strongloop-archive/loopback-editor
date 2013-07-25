@@ -28,6 +28,11 @@ exclude = [
 // possible values: 'dots', 'progress', 'junit'
 reporters = ['progress'];
 
+// This is turned on through the CLI for Jenkins
+junitReporter = {
+  outputFile: 'junit-results.xml'
+};
+
 
 // web server port
 port = 9876;
