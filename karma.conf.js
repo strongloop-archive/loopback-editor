@@ -13,7 +13,8 @@ files = [
   'public/js/angular.min.js',
   'public/js/angular-strap.min.js',
   'public/js/services.js',
-  'test/*.js'
+  'test/lib/*.js',
+  'test/unit/*.js'
 ];
 
 

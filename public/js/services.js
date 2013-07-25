@@ -14,32 +14,64 @@
 
       Workspace.getProject = getProject;
       function getProject(name) {
+        if (!name) {
+          return $q.reject(new TypeError('Expected a Project name, but none specified.'));
+        }
+
         return $http.get('/projects/' + name).then(pickData);
       }
 
       Workspace.createProject = createProject;
       function createProject(name, options) {
+        if (!name) {
+          return $q.reject(new TypeError('Expected a Project name, but none specified.'));
+        }
+
         return $http.put('/projects/' + name, options || {}).then(pickData);
       }
 
       Workspace.removeProject = removeProject;
       function removeProject(name) {
+        if (!name) {
+          return $q.reject(new TypeError('Expected a Project name, but none specified.'));
+        }
+
         return $http['delete']('/projects/' + name).then(pickData);
       }
 
       Workspace.getModulesForProject = getModulesForProject;
       function getModulesForProject(name) {
+        if (!name) {
+          return $q.reject(new TypeError('Expected a Project name, but none specified.'));
+        }
+
         return $http.get('/projects/' + name + '/modules').then(pickData);
       }
 
       Workspace.getModuleForProject = getModuleForProject;
       function getModuleForProject(name, subname) {
+        if (!name) {
+          return $q.reject(new TypeError('Expected a Project name, but none specified.'));
+        }
+
+        if (!subname) {
+          return $q.reject(new TypeError('Expected a Module name, but none specified.'));
+        }
+
         return $http.get('/projects/' + name + '/modules/' + subname).then(pickData);
       }
 
       Workspace.addModuleToProject = addModuleToProject;
       function addModuleToProject(name, subname, options) {
-        if (!options.type) {
+        if (!name) {
+          return $q.reject(new TypeError('Expected a Project name, but none specified.'));
+        }
+
+        if (!subname) {
+          return $q.reject(new TypeError('Expected a Module name, but none specified.'));
+        }
+
+        if (!options || !options.type) {
           return $q.reject(new TypeError('Expected options to include a type, but none specified.'));
         }
 
@@ -48,6 +80,14 @@
 
       Workspace.removeModuleFromProject = removeModuleFromProject;
       function removeModuleFromProject(name, subname) {
+        if (!name) {
+          return $q.reject(new TypeError('Expected a Project name, but none specified.'));
+        }
+
+        if (!subname) {
+          return $q.reject(new TypeError('Expected a Module name, but none specified.'));
+        }
+
         return $http['delete']('/projects/' + name + '/modules/' + subname).then(pickData);
       }
 
