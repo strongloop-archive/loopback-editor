@@ -1,6 +1,6 @@
 {
   "name": "loopback-editor",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A web-based frontend for building and maintaining LoopBack Projects.",
   "scripts": {
     "test": "karma start karma.conf.js",
@@ -13,7 +13,7 @@
   "repository": "",
   "author": "",
   "dependencies": {
-    "debug": "latest",
+    "debug": "~0.7.2",
     "loopback-project-manager": "git+ssh://git@github.com:strongloop/loopback-workspace.git",
     "optimist": "~0.5.2",
     "st": "~0.2.1"
@@ -21,6 +21,7 @@
   "devDependencies": {
     "karma": "~0.8.7",
     "mocha": "~1.8.2",
-    "blanket": "latest"
-  }
+    "blanket": "~1.1.5"
+  },
+  "license": "MIT"
 }
