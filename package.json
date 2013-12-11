@@ -3,12 +3,7 @@
   "version": "1.0.0",
   "description": "A web-based frontend for building and maintaining LoopBack Projects.",
   "scripts": {
-    "test": "karma start karma.conf.js",
-    "test-ci": "karma start karma.conf.js --reporters dots,junit --single-run",
-    "blanket": {
-      "pattern": "//^((?!(node_modules|test)).)*$/"
-    },
-    "coverage": "mocha -r blanket -R html-cov > coverage_loopback-editor.html"
+    "test": "karma start karma.conf.js"
   },
   "repository": "",
   "author": "",
@@ -19,9 +14,9 @@
     "st": "~0.2.1"
   },
   "devDependencies": {
-    "karma": "~0.8.7",
-    "mocha": "~1.8.2",
-    "blanket": "~1.1.5"
+    "karma": "~0.10.0",
+    "karma-junit-reporter": "~0.2.1",
+    "karma-coverage": "~0.1.4"
   },
   "license": "MIT"
 }
