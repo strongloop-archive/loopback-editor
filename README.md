@@ -1,3 +1,7 @@
+**DEPRECATED AS OF 2016-09-19**
+
+---
+
 # LoopBack Editor
 
 A web-based frontend for building and maintaining LoopBack Projects.
